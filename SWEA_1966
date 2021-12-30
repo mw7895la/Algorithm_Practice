@@ -28,7 +28,7 @@ public class Test2 {
             st = new StringTokenizer(br.readLine());
             for(int j=0; j<index; j++){
                 arr[j] = Integer.parseInt(st.nextToken());
-            }
+            } 
             list.add(i+1);
             Arrays.sort(arr);
 
