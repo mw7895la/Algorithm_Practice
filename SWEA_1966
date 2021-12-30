@@ -18,7 +18,7 @@ public class Test2 {
 
         int test_case = Integer.parseInt(st.nextToken());
 
-        for(int i=0; i<test_case; i++){
+        for(int i=0; i<test_case; i++){ 
             st = new StringTokenizer(br.readLine());
 
             int index = Integer.parseInt(st.nextToken());
