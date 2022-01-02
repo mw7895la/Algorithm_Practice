@@ -1,0 +1,55 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class Test2 {
+
+    public static void main(String[] args) throws Exception {
+        //소인수 분해하기
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int test_case = Integer.parseInt(st.nextToken());
+
+        List<Integer> list = new ArrayList<>();     // 승수를 담기 위한 리스트
+
+        //2 , 3 , 5 , 7 , 11
+        for(int i=0; i<test_case; i++){
+            st= new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int a=0, b=0,c=0, d=0, e=0;
+            while(true) {
+                if (N % 2 == 0) {
+                    N = N /2;
+                    a++;
+                } else if (N % 3 == 0) {
+                    N =N/3;
+                    b++;
+
+                } else if (N % 5 == 0) {
+                    N= N/5;
+                    c++;
+                } else if (N % 7 == 0) {
+                    N = N/7;
+                    d++;
+                } else if (N % 11 == 0) {
+                    N = N/11;
+                    e++;
+                } else {
+                    if(N==1){
+                        break;
+                    }
+                }
+            }
+
+            System.out.println("#"+(i+1)+" "+a+" "+b+" "+c+" "+d+" "+e);
+
+        }
+    }
+
+
+}
