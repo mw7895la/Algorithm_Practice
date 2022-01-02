@@ -31,7 +31,7 @@ public class Test2 {
                     b++;
 
                 } else if (N % 5 == 0) {
-                    N= N/5;
+                    N= N/5; 
                     c++;
                 } else if (N % 7 == 0) {
                     N = N/7;
