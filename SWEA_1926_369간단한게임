@@ -74,3 +74,76 @@ public class Test2 {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
+
+public class Test2 {
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        //StringBuilder stringBuilder = new StringBuilder();
+
+        int test_case = Integer.parseInt(st.nextToken());
+
+        String[] str = new String[test_case];
+
+        //st=new StringTokenizer(br.readLine());
+        for(int i=0; i<test_case; i++){
+            str[i] = Integer.toString(i+1);
+
+        }
+
+        for(int i=0; i<test_case; i++){
+
+            if(Integer.parseInt(str[i]) < 10) {
+                int num = Integer.parseInt(str[i]);
+
+                if(num %3 ==0){
+                    System.out.print("-"+" ");
+                }else{
+                    System.out.print(str[i]+" ");
+                }
+            }else {
+                StringBuilder stringBuilder = new StringBuilder(str[i]);
+                String[] arr = stringBuilder.toString().split("");
+                int count = 0;
+                for (int j = 0; j < arr.length; j++) {
+                    if (arr[j].contains("3") || arr[j].contains("6") || arr[j].contains("9")) {
+                        count++;
+                    }
+                }
+                if (count == 0) {
+                    System.out.print(str[i] + " ");
+                } else {
+                    for (int k = 0; k < count; k++) {
+                        System.out.print("-");
+                    }
+                    System.out.print(" ");
+                }
+            }
+        }
+    }
+
+
+}
+
