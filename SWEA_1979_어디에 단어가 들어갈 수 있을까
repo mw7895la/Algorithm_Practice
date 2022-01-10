@@ -1,0 +1,82 @@
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+import static java.lang.Boolean.FALSE;
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int test_case = Integer.parseInt(st.nextToken());
+
+        for(int i=0; i<test_case; i++){
+            st = new StringTokenizer(br.readLine());
+
+            int N = Integer.parseInt(st.nextToken());
+            int K = Integer.parseInt(st.nextToken());
+
+            int[][] mat = new int[N][N];
+
+            for(int j=0; j<N; j++){
+                st=new StringTokenizer(br.readLine());
+                for(int k=0; k<N; k++){
+                    mat[j][k] = Integer.parseInt(st.nextToken());
+                }
+            }
+            //최종 K길이 만큼 들어갈 숫자
+            int count =0;
+            int len;
+            //가로 먼저 Check
+            for(int j=0; j<mat.length; j++){
+                len =0;
+                for(int k=0; k<mat.length; k++){
+                    if(mat[j][k] ==1){
+                        len++;
+                        
+                    }else{
+                        if(len==K){
+                            count++;
+                        }
+                        len =0;
+                        continue;
+                    }
+
+                }
+                if(len==K){
+                    count++;
+                }
+                
+            }
+
+            //세로 Check
+            for(int j=0; j<mat.length; j++){
+                len =0;
+                for(int k=0; k<mat.length; k++){
+                    if(mat[k][j]==1){
+                        len++;
+                        
+                    }else{
+                        if(len==K){
+                            count++;
+                        }
+                        len=0;
+                        continue;
+                    }
+
+                }
+                if(len==K){
+                    count++;
+                }
+                
+            }
+
+            System.out.println("#"+(i+1)+" "+count);
+
+        }
+    }
+}
