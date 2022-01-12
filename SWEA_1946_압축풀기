@@ -1,0 +1,51 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int test_case = Integer.parseInt(st.nextToken());
+
+        for(int t=0; t<test_case; t++){
+
+            st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+
+            char[] c = new char[N];
+            int[] num = new int[N];
+
+
+            for(int i=0; i<N; i++){
+                st = new StringTokenizer(br.readLine());
+                char alpha = st.nextToken().charAt(0);
+                int size = Integer.parseInt(st.nextToken());
+
+                c[i]=alpha;
+                num[i] = size;
+            }
+            int cnt = 0;
+            System.out.println("#"+(t+1));
+            for(int i=0; i<N; i++){
+                for(int j=0; j<num[i]; j++){
+                    System.out.print(c[i]);
+                    cnt++;
+                    if(cnt==10){
+                        cnt=0;
+                        System.out.println();
+                    }
+                }
+       
+            }
+            System.out.println();
+
+        }
+
+
+    }
+}
