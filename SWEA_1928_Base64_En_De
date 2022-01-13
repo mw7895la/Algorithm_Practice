@@ -1,0 +1,27 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int test_case = Integer.parseInt(st.nextToken());
+
+        for(int t=1; t<=test_case; t++){
+            StringBuilder sb= new StringBuilder(br.readLine());
+
+            Base64.Decoder decoder = Base64.getDecoder();
+            byte[] decoded = decoder.decode(sb.toString());
+
+            String decodedString = new String(decoded,"UTF-8");
+
+            System.out.println("#"+t+" "+decodedString);
+        }
+
+    }
+}
