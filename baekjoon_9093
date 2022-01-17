@@ -1,0 +1,41 @@
+package com.company;
+
+import java.io.*;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+	// write your code heres
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st =new StringTokenizer(br.readLine());
+        BufferedWriter bf = new BufferedWriter(new OutputStreamWriter(System.out));
+        int test_case = Integer.parseInt(st.nextToken());
+        Stack<Character> stack = new Stack<>();
+        for(int t=1; t<=test_case; t++){
+
+            StringBuilder sb = new StringBuilder(br.readLine()+'\n');
+
+
+            for(char ch : sb.toString().toCharArray()){
+                if(ch ==' '|| ch=='\n'){
+                    while(!stack.isEmpty()){
+                        bf.write(stack.pop());
+                    }
+
+                    bf.write(ch);
+                }else{
+                    stack.push(ch);
+                }
+
+           }
+
+            //bf.write();
+            bf.flush();
+            //bf.close();
+
+        }
+        bf.close();
+    }
+}
