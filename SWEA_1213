@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.*;
+
+
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+
+
+
+        for(int t=1; t<=10; t++){
+            StringTokenizer st = new StringTokenizer(br.readLine().trim());
+            int N = Integer.parseInt(st.nextToken());
+            StringBuilder search = new StringBuilder(br.readLine().trim());
+            StringBuilder tc = new StringBuilder(br.readLine().trim());
+
+            int cnt=0;
+            for(int i=0; i<tc.toString().trim().length(); i++){
+
+                if(tc.toString().charAt(i)==search.toString().charAt(0)){
+
+                    int len = search.toString().trim().length();
+                    if(i+len >tc.toString().trim().length()){
+                        break;
+                    }
+
+                    String str =tc.toString().trim().substring(i,i+len);
+                    if(str.equals(search.toString().trim())){
+                        cnt++;
+                    }
+                }
+
+
+            }
+            System.out.println("#"+t+" "+cnt);
+        }
+    }
+}
