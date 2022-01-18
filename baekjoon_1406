@@ -1,0 +1,66 @@
+package com.company;
+
+import java.io.*;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+
+        String str = br.readLine();
+
+        int N = Integer.parseInt(br.readLine());
+
+        Stack<Character> left = new Stack<>();
+        Stack<Character> right = new Stack<>();
+
+        for(int i=0; i<str.length(); i++){
+            left.push(str.charAt(i));
+        }
+
+
+        for(int i=0; i<N; i++){
+            String[] cmd = br.readLine().split(" ");
+            char first = cmd[0].charAt(0);
+
+            if(first=='L'){
+                if(!left.empty()){
+                    right.push(left.pop());
+                }
+            }else if(first=='P'){
+                char second = cmd[1].charAt(0);
+                left.push(second);
+            }else if(first=='D'){
+                if(!right.empty()){
+                    left.push(right.pop());
+                }
+            }else if(first=='B'){
+                if(!left.empty()){
+                   left.pop();
+                }
+            }
+
+        }
+
+        while(true){
+            if(left.empty()){
+                break;
+            }
+            right.push(left.pop());
+
+        }
+
+        StringBuilder sb=new StringBuilder();
+        while(!right.empty()) {
+            sb.append(right.pop());
+        }
+
+        bw.write(String.valueOf(sb));
+        bw.close();
+    }
+}
