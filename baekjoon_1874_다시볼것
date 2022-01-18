@@ -1,0 +1,54 @@
+package com.company;
+
+import java.io.*;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        Stack<Integer> stack = new Stack<>();
+        int N = Integer.parseInt(st.nextToken());
+        int m=0;
+        //N = 8
+        //4 3 6 8 7 5 2 1
+        int[] arr = new int[N];
+
+        for(int i=0; i<N; i++){
+            st = new StringTokenizer(br.readLine());
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+        //여기까지 4 , 3 , 6 ..... 1 까지 입력.
+
+        for(int x : arr){
+             if(x>m){
+                 while(x>m){
+                     stack.push(++m);
+                     sb.append("+\n");
+
+                 }
+                 stack.pop();
+                 sb.append("-\n");
+             }else{
+                 if(stack.peek() != x){
+                     bw.write("NO");
+                     bw.flush();
+                     System.exit(0);
+                 }
+                 stack.pop();
+                 sb.append("-\n");
+             }
+
+        }
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+
+
+    }
+}
