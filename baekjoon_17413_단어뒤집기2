@@ -1,0 +1,59 @@
+package com.company;
+
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        //태그는 뒤집지 않는다.
+
+        Stack<Character> stack = new Stack<>();
+
+        StringBuilder sb = new StringBuilder(br.readLine());
+        boolean tag = false;
+
+
+        for(char ch : sb.toString().toCharArray()){
+            //'<'일때
+            if(ch=='<'){
+                output(bw, stack);
+                tag = true;
+                bw.write(ch);
+
+            }else if(ch=='>'){
+                //'>' 일때
+                tag=false;
+                bw.write(ch);
+
+            }else if(tag){
+                bw.write(ch);
+            }else{
+                if(ch==' '){
+                    output(bw,stack);
+                    bw.write(ch);
+                }else{
+                    stack.push(ch);
+                }
+            }
+        }
+        output(bw,stack);
+        bw.flush();
+        bw.close();
+
+
+    }
+
+    static void output(BufferedWriter bw,Stack<Character> s)throws IOException{
+        while(!s.isEmpty()){
+            bw.write(s.pop());
+        }
+    }
+}
