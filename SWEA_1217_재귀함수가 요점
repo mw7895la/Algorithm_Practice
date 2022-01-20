@@ -1,0 +1,41 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.*;
+
+public class Test2 {
+    public static int res = 1;
+
+    static int recursion(int N, int M){
+        if(M==0){
+
+
+            return 1;
+        }else{
+           return res = N * recursion(N,M-1);
+        }
+
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+
+        for(int t=1; t<=10; t++) {
+            int tc = Integer.parseInt(br.readLine());
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int M = Integer.parseInt(st.nextToken());
+
+            int result = recursion(N,M);
+            bw.write("#"+t+" ");
+            bw.write(String.valueOf(result));
+            bw.newLine();
+            bw.flush();
+        }
+        bw.close();
+    }
+}
