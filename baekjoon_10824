@@ -1,0 +1,26 @@
+BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(st.nextToken());
+        sb.append(st.nextToken());
+
+        long a = Long.parseLong(sb.toString());
+        sb.setLength(0);
+
+        sb.append(st.nextToken());
+        sb.append(st.nextToken());
+        long b = Long.parseLong(sb.toString());
+
+
+        long res = a+b;
+
+
+
+
+
+        bw.write(String.valueOf(res));
+        bw.flush();
+        bw.close();
