@@ -1,0 +1,44 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+        //단어길이재기
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+
+        StringBuilder sb = new StringBuilder();
+
+        String str = br.readLine();
+
+
+        for (int j = 0; j < str.length(); j++) {
+            int x = str.charAt(j);
+
+            if (x >= 'a' && x <= 'm') {
+                x = x+13;
+            } else if (x >= 'n' && x <= 'z') {
+                x = x-13;
+            } else if (x >= 'A' && x <= 'M') {
+                x = x+13;
+            } else if (x >= 'N' && x <= 'Z') {
+                x = x-13;
+            }
+            sb.append((char) x);
+        }
+
+
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+
+
+    }
+
+}
