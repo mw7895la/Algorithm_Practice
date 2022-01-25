@@ -1,0 +1,52 @@
+package com.company;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+
+public class Solution {
+
+    public static int gcd(int a, int b){
+        while(b!=0){
+            int r = a%b;
+            a=b;
+            b=r;
+        }
+        return a;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        for(int t=1; t<=test_case; t++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            int[] num = new int[N];
+            long result=0;
+
+            for(int i=0; i<N; i++){
+                num[i] = Integer.parseInt(st.nextToken());
+            }
+
+            for(int i=0; i<N-1; i++){
+
+                for(int j=i+1; j<N; j++){
+                    result+=gcd(num[i],num[j]);
+                }
+            }
+
+
+            bw.write(Long.toString(result));
+            bw.newLine();
+            bw.flush();
+
+        }
+        bw.close();
+    }
+}
