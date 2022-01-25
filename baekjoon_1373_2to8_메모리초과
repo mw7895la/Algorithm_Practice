@@ -1,0 +1,53 @@
+package com.company;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.Stack;
+import java.util.StringTokenizer;
+
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        //2진수가 주어졌을 때 8진수로 변환해라
+
+        //11001100
+
+        StringBuilder sb = new StringBuilder(br.readLine());
+
+        Stack<Double> s= new Stack<>();
+        int N = sb.toString().length();
+        double res;
+
+
+        for(int i=N-1; i>=0; i=i-3){
+            res =0;
+            int k=i;
+            for(int j=0; j<3; j++){
+
+                if(k<0){
+                    break;
+                }
+
+                double a = Character.getNumericValue(sb.toString().charAt(k--));
+
+                if(a!=0){
+                    res = res + a*Math.pow(2,j);
+                }
+
+            }
+            s.push(res);
+        }
+        sb.setLength(0);
+        while(!s.isEmpty()){
+            sb.append(Math.round(s.pop()));
+        }
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+
+    }
+}
