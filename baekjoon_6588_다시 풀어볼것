@@ -1,0 +1,50 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+
+public class Solution {
+    public static final int MAX = 1000000;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+
+        boolean[] check = new boolean[MAX+1];
+        List<Integer> prime = new ArrayList<>();
+
+        for(int i=2; i*i<=MAX; i++){
+            if(check[i]==true){
+                continue;
+            }
+            prime.add(i);
+            for(int j=i+i; j<=MAX; j=j+i){
+                check[j]=true;
+            }
+        }
+
+        while(true){
+            int n = Integer.parseInt(br.readLine());
+            if(n==0){
+                break;
+            }
+
+            for(int i=1; i<prime.size(); i++){
+                int p = prime.get(i);
+
+                if(check[n-p]==false){
+                    bw.write(n+" = "+p+" + "+(n-p));
+                    bw.newLine();
+                    bw.flush();
+                    break;
+                }
+            }
+
+        }
+
+        bw.close();
+
+    }
+}
