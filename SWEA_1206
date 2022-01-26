@@ -1,0 +1,54 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        for(int t=1; t<=10; t++) {
+            int N = Integer.parseInt(br.readLine());
+
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int[][] bd = new int[N][];
+
+            for (int i = 0; i < N; i++) {
+                bd[i] = new int[Integer.parseInt(st.nextToken())];
+            }
+
+            //양옆 2개씩 빌딩에서 최고 높이
+            int max;
+            //조망권 빌딩의 수
+            int count = 0;
+            int len;
+            for (int i = 2; i < N - 2; i++) {
+                max = 0;
+
+                for (int j = i - 2; j <= i + 2; j++) {
+                    if (j == i) {
+                        continue;
+                    } else {
+
+                        len = bd[j].length;
+                        max = Math.max(max, len);
+
+                    }
+                }
+                if (bd[i].length - max > 0) {
+                    count = count + bd[i].length - max;
+                } else {
+                    continue;
+                }
+            }
+
+            bw.write("#"+t+" "+String.valueOf(count));
+            bw.flush();
+        }
+        bw.close();
+
+    }
+}
