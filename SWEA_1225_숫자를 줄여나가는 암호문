@@ -1,0 +1,57 @@
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+public class Test2 {
+    public static void main(String[] args) throws Exception {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        
+        Queue<Integer> q = new LinkedList<>();
+        int[] res = new int[8];
+        for(int t=1; t<=10; t++) {
+            int test_case = Integer.parseInt(br.readLine());
+            //Queue 초기화
+            q.clear();
+            Arrays.fill(res,0);
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            for(int i=0; i<8; i++){
+
+                q.offer(Integer.parseInt(st.nextToken()));
+
+            }
+            int count=1;
+
+            while(count != 0){
+                for(int i=1; i<6; i++){
+                    count = q.poll();
+                    count-=i;
+                    if(count<=0){
+                        count=0;
+                    }
+                    q.offer(count);
+                    if(count==0)break;
+                }
+            }
+            bw.write("#"+t+" ");
+            for(int i=0; i<8; i++){
+                bw.write(String.valueOf(q.poll())+" ");
+                bw.flush();
+            }
+
+            bw.newLine();
+
+        }
+        bw.close();
+
+    }
+
+}
