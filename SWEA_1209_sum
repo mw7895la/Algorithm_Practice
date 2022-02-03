@@ -1,0 +1,71 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        for(int t=1; t<=10; t++){
+            int N = Integer.parseInt(br.readLine());
+            int[][] mat = new int[100][100];
+
+            for(int i=0; i<mat.length; i++){
+                Arrays.fill(mat[i],0);
+            }
+
+
+
+            for(int i=0; i<mat.length; i++){
+                StringTokenizer st = new StringTokenizer(br.readLine());
+                for(int j=0; j<mat.length; j++){
+                    mat[i][j] = Integer.parseInt(st.nextToken());
+                }
+            }
+
+            int max=0;
+            int sum;
+
+            //가로
+            for(int i=0; i<mat.length; i++){
+                sum=0;
+                for(int j=0; j<100; j++){
+                    sum+=mat[i][j];
+                }
+                max = Math.max(max,sum);
+            }
+
+            //세로
+            for(int i=0; i<mat.length; i++){
+                sum=0;
+                for(int j=0; j<100; j++){
+                    sum+=mat[j][i];
+                }
+                max = Math.max(max,sum);
+            }
+
+            sum =0;
+            for(int i=0; i<mat.length; i++){
+                sum+=mat[i][i];
+            }
+            max = Math.max(max,sum);
+
+            sum=0;
+
+            for(int i=0; i<mat.length; i++){
+                sum+=mat[i][99-i];
+            }
+            max = Math.max(max,sum);
+
+            bw.write("#"+t+" "+String.valueOf(max));
+            bw.newLine();
+            bw.flush();
+
+
+        }
+        bw.close();
+    }
+}
