@@ -1,0 +1,27 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        //이친수 pinary number
+
+        int N = Integer.parseInt(br.readLine());
+
+        long[] d = new long[91];
+        d[0] = 0;
+        d[1] = 1;
+        for(int i=2; i<=N; i++){
+            d[i] = d[i-1]+d[i-2];
+        }
+        bw.write(String.valueOf(d[N]));
+        bw.close();
+    }
+}
