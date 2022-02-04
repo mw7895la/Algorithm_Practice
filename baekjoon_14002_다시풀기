@@ -1,0 +1,60 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    static int[] arr;
+    static int[] d;
+    static int[] v;
+
+
+    static void go(int p){
+        if(p==-1)return;
+        go(v[p]);
+        System.out.print(arr[p]+" ");
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+
+        arr= new int[N];
+        d = new int[N];
+        v = new int[N];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<arr.length; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        for(int i=0; i<N; i++){
+            d[i] =1;
+            v[i]=-1;
+            for(int j=0; j<i; j++){
+                if(arr[j] < arr[i] && d[i]<d[j]+1){
+
+                    d[i] = d[j]+1;
+                    v[i] = j;
+                }
+            }
+        }
+
+        int len = d[0];
+
+        int p =0;
+
+        for(int i=0; i<N; i++){
+            if(len<d[i]){
+                len = d[i];
+                p=i;
+            }
+        }
+        System.out.println(len);
+        go(p);
+        System.out.println();
+    }
+}
