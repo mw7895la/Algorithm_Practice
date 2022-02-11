@@ -1,0 +1,48 @@
+package com.company;
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        //몇번 째 해인지를 나타내야 함.
+
+        int test_case = Integer.parseInt(br.readLine());
+
+
+        for (int t = 1; t <= test_case; t++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            // <M:N>
+            int M = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+
+            x = x - 1;
+            y = y - 1;
+            boolean ok = false;
+            for (int k = x; k < M * N; k = k + M) {
+                if (k % N == y) {
+                    bw.write(String.valueOf(k + 1));
+                    bw.newLine();
+                    bw.flush();
+                    ok=true;
+                    break;
+                }
+            }
+            if(!ok){
+                bw.write(String.valueOf(-1));
+                bw.newLine();
+                bw.flush();
+            }
+
+
+        }
+        bw.close();
+    }
+}
