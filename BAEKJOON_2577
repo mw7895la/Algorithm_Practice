@@ -1,0 +1,46 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+    //205,352
+    //BufferedReader 는 입출력 장치로부터 입력받은 데이터를 Buffer라는 공간에 저장
+
+    //InputStreamReader는 Reader의 하위 클래스로 BufferedReader객체 생성 시 파라미터로 이용 가능하다.
+        int[] num = new int[3];
+        int result=1;
+        for(int i=0; i<3; i++) {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            //2개의 보조 스트림 BufferedReader, InputStreamReader를 사용해서 입력 객체를 생성해준다.
+            //BufferedReader는 Line단위로 읽는다
+            //br.readLine() 메서드를 통해 입력을 받을 수 있다 String으로 입력을 받아야 한다.
+            num[i] = Integer.parseInt(br.readLine());
+
+
+            //StringTokenizer st = new StringTokenizer(br.readLine());
+        }
+
+        for(int i=0; i<num.length; i++){
+            result = result * num[i];
+        }
+        //System.out.println(result);
+
+        //charAt과 관련해서 숫자일때는 -'0'을 써줘야 한다.
+
+        String str = String.valueOf(result);
+
+        for(int i=0; i<10; i++){
+            int count=0;
+            for(int j=0; j<str.length(); j++){
+                if(str.charAt(j)-'0' == i){
+                    count++;
+                }
+            }
+            System.out.println(count);
+        }
+
+
+    }
+}
