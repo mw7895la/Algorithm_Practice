@@ -1,0 +1,53 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.StringTokenizer;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        /* N개의 정수를 입력해서 최소와 최대를 찾아 출력해라 */
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int test_case = Integer.parseInt(br.readLine());      //5 입력
+        int[] minMax = new int[test_case];                      //5개 집어넣을 배열 선언
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        for(int i=0; i<test_case; i++){
+            minMax[i] = Integer.parseInt(st.nextToken());
+
+        }
+
+        int min = minMax[0];     //작던 크던 제일 처음수를 일단 search에 넣는다.
+
+        for(int i=1; i<test_case; i++){
+            if(min > minMax[i]){
+                min = minMax[i];
+            }
+        }
+        System.out.print(min+" ");
+
+        int max = minMax[0];
+        for(int i=1; i<test_case; i++){
+            if(max < minMax[i]){
+                max = minMax[i];
+            }
+        }
+        System.out.println(max);
+
+        //Arrays.sort 오름차순으로 최소와 최대 찾기
+        //Arrays.sort(minMax);
+        //System.out.print(minMax[0]+" "+minMax[4]);
+
+        //Arrays.sort 내림차순으로 최소와 최대 찾기
+        // 다만 주의할 점은 이때는 Integer로 배열을 선언한 상태여야 한다.
+        // Arrays.sort(minMax, Collections.reverseOrder());
+
+
+
+        //https://codechacha.com/ko/java-sorting-array/
+
+    }
+}
