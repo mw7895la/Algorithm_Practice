@@ -1,0 +1,39 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        //처음에 26을 입력받아.
+        int num = Integer.parseInt(br.readLine());
+
+        int resultNum = num;
+        int count = 1;
+
+        while (true) {
+            StringBuilder sb = new StringBuilder();     //여기서 새로운 인스턴스 할당이라 아래에서 append한것들이 사라진다.
+            int a = num / 10;
+            int b = num % 10;
+
+            String str1 = String.valueOf(b);
+            String str2 = String.valueOf((a + b) % 10);
+
+            sb.append(str1);
+            sb.append(str2);
+            String result = sb.toString();
+
+            if (resultNum == Integer.parseInt(result)) {
+
+                break;
+            } else {
+                count++;
+                num = Integer.parseInt(result);
+            }
+        }
+        System.out.println(count);
+    }
+}
