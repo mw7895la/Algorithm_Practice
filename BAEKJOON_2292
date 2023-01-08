@@ -1,0 +1,37 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        //가운데 1부터 시작
+        //1은 1칸   1+6*1 =7 까지는 2칸  7+ 6*2=19 까지는 3칸   19+6*3 = 37까지는 4칸...
+        int count=1;
+        int num=1;
+        while(true){
+
+            if(N==1){
+                System.out.println("1");
+                break;
+            }else{
+                if(N <= 6*count+num){
+                    System.out.println(count+1);
+                    break;
+                }else{
+                    num= 6*count+num;
+                    count++;
+                }
+            }
+
+
+        }
+
+    }
+}
