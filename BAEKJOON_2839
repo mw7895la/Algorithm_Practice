@@ -1,0 +1,38 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+
+        int count=0;
+        
+        
+        //이 문제에서는 3과 5로 최소로 가져다 줘야한다.
+        //상대적으로 작은수인 3으로는 뺄셈하면서 5의 배수로 가능할 때 까지 횟수만 추가하고
+        //5로 나눴을 떄 나머지가 0이면  5로 나눈 몫을 카운트에 더해만 주면 끝.
+        while(true){
+            if(N%5==0){
+                count = count + (N/5);
+                System.out.println(count);
+                break;
+            }else{
+                N = N-3;
+                count++;
+            }
+
+            if(N <0){
+                System.out.println("-1");
+                break;
+            }
+        }
+
+
+    }
+}
