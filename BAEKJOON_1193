@@ -1,0 +1,43 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+
+        int n =1; // 몇 번째 행인가??
+
+        int X = Integer.parseInt(br.readLine());
+
+        if(X==1){
+            System.out.println("1/1");
+            System.exit(0);
+        }
+        int i=2;
+        int sum=1;
+        while(true){
+            sum = sum+i;     // sum =3
+            n++;      //시작하자마자 2
+                            //i =2
+
+            if(X <= sum) {
+                if (n % 2 == 0) {
+                    System.out.println((X-sum+n)+"/"+(sum-X+1));
+                } else {
+                    System.out.println((sum-X+1)+"/"+(X-sum+n));
+                }
+                break;
+            }
+
+            i++;
+        }
+
+
+
+
+    }
+}
