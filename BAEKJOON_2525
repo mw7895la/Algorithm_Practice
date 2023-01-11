@@ -1,0 +1,35 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int current_hour = Integer.parseInt(st.nextToken());
+        int current_minute = Integer.parseInt(st.nextToken());
+
+        int cook = Integer.parseInt(br.readLine());
+        int sum= current_minute+cook;    //분끼리의 합
+        if(sum <60){
+            //int sum = current_minute+cook;
+            System.out.println(current_hour+" "+sum);
+        }
+        if(sum >= 60){
+            current_hour += sum/60;
+            current_minute =sum%60;
+            if(current_hour >=24){
+                current_hour = current_hour -24;
+            }
+            System.out.println(current_hour+" "+current_minute);
+        }
+
+
+    }
+}
