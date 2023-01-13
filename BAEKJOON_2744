@@ -1,0 +1,41 @@
+import java.io.*;
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringBuilder sb= new StringBuilder(br.readLine());
+
+        //String str = br.readLine();
+
+        //WrongAnswer
+        //소문자는 대문자로  대문자는 소문자로.
+        //문자열같은 경우는  String str = "abc"  // str.toUpperCase();
+        //캐릭터형 같은 경우는  Char c= 'a'  // Character.toUpperCase(c);
+
+        for(int i=0; i<sb.toString().length(); i++){
+            char c = sb.charAt(i);
+
+            if(c>=65 && c<=90){
+                sb.setCharAt(i, Character.toLowerCase(c));
+            }
+
+            if(c>=97 && c<=122){
+                sb.setCharAt(i, Character.toUpperCase(c));
+            }
+        }
+
+
+        br.close();
+
+
+        bw.write(sb.toString()+"\n");
+        bw.flush();
+        bw.close();
+
+    }
+}
