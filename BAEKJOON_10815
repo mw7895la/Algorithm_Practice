@@ -1,0 +1,51 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.StringTokenizer;
+
+
+public class Main {
+    //static int ans = Integer.MAX_VALUE;
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        //상근이가 가지고 있는 카드 개수
+        int N = Integer.parseInt(br.readLine());
+        int[] N1=new int[N];
+        StringTokenizer st =new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            N1[i] = Integer.parseInt(st.nextToken());
+        }
+
+
+        int M = Integer.parseInt(br.readLine());
+        int[] M1 = new int[M];
+        StringTokenizer st2 = new StringTokenizer(br.readLine());
+        for(int i=0; i<M; i++){
+            M1[i] = Integer.parseInt(st2.nextToken());
+        }
+
+
+        for(int i=0; i<M; i++){
+            for(int j=0; j<N; j++){
+                if(M1[i] == N1[j]){
+                    M1[i] =1;
+                }
+
+                if(j==N-1 && M1[i]!=1){
+                    M1[i] =0;
+                }
+            }
+        }
+
+        for(int res : M1){
+            bw.write(String.valueOf(res)+" ");
+            bw.flush();
+        }
+        bw.close();
+
+
+    }
+}
