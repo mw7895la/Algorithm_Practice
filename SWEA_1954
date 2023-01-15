@@ -1,0 +1,76 @@
+import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.StringTokenizer;
+
+
+public class Main {
+
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        //우 하 좌 상
+        int[] dx = {0,1,0,-1};
+        int[] dy = {1,0,-1,0};
+
+        for(int tc=1; tc<=test_case; tc++){
+            int N = Integer.parseInt(br.readLine());
+            if(N==1){
+                System.out.printf("#%d\n",tc);
+                System.out.println(1);
+                continue;
+            }
+            int x=0;
+            int y=0;
+
+            //방향
+            int dir=0;
+            int[][] arr=new int[N][N];
+
+            for(int i=0; i<N*N; i++){
+                arr[x][y]= i+1;
+                x = x+dx[dir];
+                y = y+dy[dir];
+
+                if(x<0 || x>=N || y<0 || y>=N){
+                    //x와 y가 범위를 벗어나면
+
+                    //다시 원래자리로 되돌린다.
+                    x = x-dx[dir];
+                    y = y-dy[dir];
+
+                    //그리고 방향전환
+                    dir = (dir+1)%4;
+
+                    //다시 이동
+                    x = x+dx[dir];
+                    y= y+dy[dir];
+                }
+                //배열값이 존재할 경우 똑같이 자리 되돌린 후 방향전환 후 이동
+                if(arr[x][y] !=0){
+                    x = x-dx[dir];
+                    y = y-dy[dir];
+
+                    dir = (dir+1)%4;
+
+                    x= x+dx[dir];
+                    y= y+dy[dir];
+                }
+            }
+            System.out.printf("#%d\n",tc);
+            for(int i=0; i<N; i++){
+                for(int j=0; j<N; j++){
+                    System.out.print(arr[i][j]+" ");
+                }
+                System.out.println();
+            }
+
+        }
+
+    }
+}
