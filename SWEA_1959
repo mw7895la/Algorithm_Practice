@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        for(int t=1; t<=test_case; t++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            int N = Integer.parseInt(st.nextToken());       //3
+            int M = Integer.parseInt(st.nextToken());       //5
+
+            int[] a = new int[N];
+            int[] b = new int[M];
+            List<Integer> list = new ArrayList<Integer>();
+
+            StringTokenizer st2 = new StringTokenizer(br.readLine());
+            for (int i = 0; i < a.length; i++) {
+                a[i] = Integer.parseInt(st2.nextToken());
+            }
+
+            StringTokenizer st3 = new StringTokenizer(br.readLine());
+            for (int i = 0; i < b.length; i++) {
+                b[i] = Integer.parseInt(st3.nextToken());
+            }
+
+
+            if(N<M) {
+                for (int i = 0; i <=M- N; i++) {
+                    int count = 0;
+                    int result = 0;
+                    for (int j = i; j < N + i; j++) {
+                        int mul = a[count++] * b[j];
+                        result = result + mul;
+                    }
+                    list.add(result);
+                }
+            }else{
+                for (int i = 0; i <=N- M; i++) {
+                    int count = 0;
+                    int result = 0;
+                    for (int j = i; j < M+i; j++) {
+                        int mul = b[count++] * a[j];
+                        result = result + mul;
+                    }
+                    list.add(result);
+                }
+            }
+
+
+            Collections.sort(list);
+
+            int res = list.get(list.size() - 1);
+
+            bw.write("#"+String.valueOf(t)+" "+String.valueOf(res));
+            bw.newLine();
+            bw.flush();
+
+
+        }
+        bw.close();
+
+
+
+    }
+}
