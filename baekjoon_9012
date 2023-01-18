@@ -1,57 +1,53 @@
 import java.io.*;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Stack;
 import java.util.StringTokenizer;
 
+
 public class Main {
 
-    public static void main(String[] args) throws IOException {
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
+        //총 몇번 테스트?
+        int N = Integer.parseInt(br.readLine());
+        Stack<Character> s =new Stack<>();
 
-        // (()())) ?
-        //테스트 케이스 T
-        int test_case = Integer.parseInt(st.nextToken());
-        //스택 선언
-        Stack<Character> stack = new Stack<>();
+        for(int i=0; i<N; i++){
+            s.clear();
+            String str = br.readLine();
 
-        for(int t=1; t<=test_case; t++){
-            StringBuilder sb = new StringBuilder(br.readLine());
-            int cnt=0;
+            for(int j=0; j<str.length(); j++){
+                char c = str.charAt(j);
 
-            for(int i=0; i<sb.toString().trim().length(); i++){
-
-                if(sb.toString().charAt(i) =='('){
-                    stack.push(sb.toString().charAt(i));
-                    // Stack size가 0이 아니거나 ')'가 남는다면 NO를 출력해야됨.
-                }
-
-                if(sb.toString().charAt(i) ==')'){
-                    cnt++;
-                    if(!stack.isEmpty()) {
-                        stack.pop();
-                        cnt--;
+                if(c=='('){
+                    s.push(c);
+                }else{
+                    // c == ')' case
+                    if(s.size()==0){
+                        s.push(c);
+                        break;
+                    }else{
+                        s.pop();
                     }
+
                 }
-
-
 
             }
-
-            if(cnt==0 && stack.isEmpty()){
+            if(s.size()==0){
                 bw.write("YES");
                 bw.newLine();
-            }
-            if(cnt!=0 || !stack.isEmpty()){
+                bw.flush();
+            }else{
                 bw.write("NO");
                 bw.newLine();
+                bw.flush();
             }
 
-            stack.clear();
         }
         bw.close();
-
     }
 }
