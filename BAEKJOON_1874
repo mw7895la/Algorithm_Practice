@@ -1,0 +1,38 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder sb =new StringBuilder();
+        Stack<Integer> s = new Stack<>();
+        int comp=0;
+        for (int i = 0; i < N; i++) {
+            int num = Integer.parseInt(br.readLine());  //맨처음 4
+            if(comp < num) {
+                for (int j = comp; j < num; j++) {
+                    s.push(j + 1);
+                    sb.append("+").append("\n");
+                }
+                comp = s.peek();
+            }
+
+            if(s.peek() !=num){
+                System.out.println("NO");
+                System.exit(0);
+            }
+            s.pop();
+            sb.append("-").append("\n");
+
+        }
+        s.clear();
+        bw.write(sb.toString());
+        bw.flush();
+        bw.close();
+
+    }
+
+}
