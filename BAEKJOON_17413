@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        Stack<Character> s = new Stack<>();
+
+        StringBuilder sb=new StringBuilder(br.readLine());
+        boolean inout = false;      //<> 태그 안이면 true  밖이면 false
+
+        for(int i=0; i<sb.length(); i++){
+                if(sb.charAt(i)=='<'){
+                    inout = true;       //태그 안이니까 true로 바꿔준다.
+
+                    while(!s.isEmpty()){    // <전까지를 다 비워야함
+                        System.out.print(s.pop());
+                    }
+                    System.out.print(sb.charAt(i)); //태그 마저 출력해주고,
+                    
+                }else if(sb.charAt(i)=='>'){
+                    inout = false;          //이제 태그 바깥쪽이 되니 false로 바꿔준다.
+                    System.out.print(sb.charAt(i));     
+                }else if(inout){                //태그 안쪽이면 그대로 출력
+                    System.out.print(sb.charAt(i));
+                }else if(!inout){               //태그 바깥쪽일때 공백이면 스택 POP 아니면 PUSH
+                    if(sb.charAt(i)==' '){
+                        while(!s.isEmpty()){
+                            System.out.print(s.pop());
+                        }
+                        System.out.print(sb.charAt(i));
+                    }else{
+                        //공백이 아니라면 PUSH
+                        s.push(sb.charAt(i));
+                    }
+
+                }
+
+        }
+        while(!s.isEmpty()){
+            System.out.print(s.pop());
+        }
+
+
+    }
+}
