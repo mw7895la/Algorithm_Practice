@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        // 1 <= E <= 15
+        // 1 <= S <= 28
+        // 1 <= M <= 19
+
+        //입력은 E S M
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int E = Integer.parseInt(st.nextToken());
+        int S = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        if(E==1 && S==1 && M==1){
+            bw.write("1");
+            bw.flush(); bw.close();
+            System.exit(0);
+        }
+
+        int e1=1; int s1=1; int m1=1;
+        int year=1;
+        while(true){
+            if(e1 > 15){
+                e1 = 1;
+            }
+            if(s1 > 28){
+                s1 = 1;
+            }
+            if(m1 > 19){
+                m1 = 1;
+            }
+            if(e1==E && s1==S && m1==M){
+                bw.write(String.valueOf(year));
+                bw.newLine();bw.flush();
+                break;
+            }
+
+            e1++; s1++; m1++;
+            year++;
+        }
+
+        bw.close();
+
+    }
+}
