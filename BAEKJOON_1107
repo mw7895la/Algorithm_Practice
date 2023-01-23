@@ -1,0 +1,85 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+
+    static boolean[] broken= new boolean[10];
+
+    public static int possible(int c){
+        if(c==0){
+            if(broken[0]){
+                return 0;
+            }else{
+                return 1;
+            }
+        }
+        int len=0;
+        while(c>0){
+            if(broken[c%10]){
+                return 0;
+            }
+            len +=1;
+            c/=10;      //5457 -> 545 -> 54 -> 5 이렇게 하면 각 자리 숫자 다 확인 가능.
+        }
+        return len;
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        //숫자 버튼만 이용해서 이동할 채널이 c 1 ~ 1000000
+
+        //c에 포함되어 있는 숫자 중에 고장난 버튼이 있는지 ??
+        //1- 수를 문자열로 바꾸고 한글자씩 검사
+        //2- 수를 10으로 계속 나눠 하나씩 검사  << 여기선 이 방법
+        //5 4 5 7
+
+
+        //이동하려는 채널 c
+        // 숫자 버튼 몇번 눌러야하는지 len  // press +,-버튼 몇번 눌러야 하는지
+
+        //이동할 채널 5457
+        //고장난 버튼 3개
+        // 6 , 7 ,8
+
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());        //이동할 채널
+        int M = Integer.parseInt(br.readLine());        //고장난 버튼 수
+
+        Arrays.fill(broken,false);
+        
+        if(M>0) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int i = 0; i < M; i++) {
+                broken[Integer.parseInt(st.nextToken())] = true;
+            }//broken[6] =true  //  broken[7] =true  //  broken[8] =true
+        }
+        int ans = N -100;       //문제에서 처음 시작은 채널 100부터 시작한다해서 순수 +-로만 누르는 횟수 때문에 이동할 채널 - 100
+        if(ans <0){
+            ans = -ans;
+        }
+
+
+        for(int i=0; i<=1000000; i++){
+            int c = i;      //숫자 버튼만 이용해서 이동할 채널                //ex) 5455
+            int len = possible(c);      // len은 숫자버튼 몇번 눌러야 하는지
+
+            if(len >0){
+                int press = c-N;        //5455 - 5457  = -2     //c는 결국 숫자버튼만 이용해서 N에 최대한 가까운수가 나올때 까지 해야함.
+                if(press<0){
+                    press = -press;
+                }
+
+                if(ans > len +press){ //5357  > 4+2
+                    ans = len +press;
+                }
+            }
+        }
+
+        bw.write(String.valueOf(ans));
+        bw.flush();
+        bw.close();
+    }
+}
