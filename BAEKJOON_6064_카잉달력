@@ -1,0 +1,42 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        for (int t = 1; t <= test_case; t++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            //M N x y 순으로 입력
+            int M = Integer.parseInt(st.nextToken());
+            int N = Integer.parseInt(st.nextToken());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+
+            x = x - 1;
+            y = y - 1;
+            int count = 0;
+            //M에 대해서 고정
+            boolean ok = false;
+            for (int i = x; i < (N * M); i += M) {
+                if (i % N == y) {
+                    ok = true;
+                    count = i+1;
+                    break;
+                }
+            }
+            if (ok) {
+                bw.write(String.valueOf(count));
+            } else {
+                bw.write("-1");
+            }
+            bw.newLine();
+            bw.flush();
+        }
+        bw.close();
+    }
+}
