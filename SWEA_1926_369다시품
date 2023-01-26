@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        //3 6 9가 들어간 숫자는 들어간 횟수대로 박수를 친다 -
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        StringBuilder sb= new StringBuilder();
+        StringBuilder sb2= new StringBuilder();
+        for(int i=1; i<=N; i++){
+            sb.append(i);
+            for(int j=0; j<sb.length(); j++){
+                char c = sb.charAt(j);
+                sb2.append(c);
+                if(c=='3' || c=='6' || c=='9'){
+                    bw.write("-");
+                    sb2.append('-');
+                }else{
+                    if(j==sb.length()-1 && sb2.toString().equals(sb.toString())){
+                        bw.write(sb.toString());
+                    }
+                }
+            }
+            sb2.delete(0,i);
+            sb.delete(0,i);
+            bw.write(" ");
+        }
+        bw.flush();
+        bw.close();
+    }
+}
