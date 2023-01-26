@@ -1,0 +1,49 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        int[][] arr;
+        for(int t=1; t<=test_case; t++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());   //전체 배열 크기
+            int M = Integer.parseInt(st.nextToken());   //파리채 크기
+            arr=new int[N][N];
+
+            for(int i=0; i<N; i++){
+                st=new StringTokenizer(br.readLine());
+                for(int j=0; j<N; j++){
+                    arr[i][j] = Integer.parseInt(st.nextToken());
+                }
+            }//N*N 배열에 다 넣음.
+            // N =5 라 치고  M= 2라고 하자
+            int sum=0;
+            int max=0;
+
+            for(int i=0; i<=N-M; i++){
+                for(int j=0; j<=N-M; j++){
+
+                    for(int k=i; k<M+i; k++){
+                        for(int l=j; l<M+j; l++){
+                            sum+=arr[k][l];
+                        }
+                    }
+
+                    if(max <sum){
+                        max = sum;
+                    }
+                    sum=0;
+                }
+
+            }
+            bw.write("#"+t+" ");
+            bw.write(String.valueOf(max));
+            bw.newLine();
+            bw.flush();
+        }
+        bw.close();
+    }
+}
