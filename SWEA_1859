@@ -1,0 +1,50 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException{
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        int[] arr;
+        for(int t=1; t<=test_case; t++) {
+            int N = Integer.parseInt(br.readLine());
+            arr =new int[N];
+            StringTokenizer st = new StringTokenizer(br.readLine());
+
+            for(int i=0; i<N; i++){
+                arr[i] = Integer.parseInt(st.nextToken());
+            }
+            long max=Long.MIN_VALUE;
+            int count=0;            //나중에 비싼게 나왔을때 그 가격으로 판매할 개수 //최대값보다 작은값이었을때 더해준 구매개수
+            long cost=0L;       //구매가(비쌀때 팔고 최대 이익이 얼마냐 물은것이니까 cost는 빼줘야함.
+            long res=0L;        //최종 결과값
+
+            for(int i=N-1; i>=0; i--){
+                //더 큰 최대값을 찾으면 해당 max에서 팔자
+                if(arr[i] > max){
+                    res = res + (max*count - cost);
+                    max = arr[i];
+
+                    count=0;
+                    cost=0;
+                }else{
+                    //최대값 보다 작은값이면 구매해야 한다.
+                    cost = cost + arr[i];
+                    count++;
+                }
+            }
+            res +=(max*count-cost);
+            bw.write("#"+t+" ");
+            bw.write(String.valueOf(res));
+            bw.newLine();
+
+
+        }//test case 닫 괄호
+        bw.flush();
+        bw.close();
+
+    }
+}
