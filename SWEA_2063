@@ -1,0 +1,31 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException{
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        List<Integer> list = new ArrayList<>();
+
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        for(int i=0; i<N; i++){
+           list.add(Integer.parseInt(st.nextToken()));
+        }
+        HashSet<Integer> map =new HashSet<>(list);
+
+        List<Integer> newList = new ArrayList<>(map);
+
+        Collections.sort(newList);
+        int length = newList.size();
+        bw.write(String.valueOf(newList.get(length/2+1)));
+        bw.flush();
+        bw.close();
+
+
+    }
+}
