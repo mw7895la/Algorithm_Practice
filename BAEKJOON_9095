@@ -1,0 +1,29 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+   public static int recursion(int count, int sum, int goal){
+       if(sum > goal)return 0;
+       if(sum==goal)return 1;
+       int now =0;
+       for(int i=1; i<=3; i++){
+           now= now + recursion(count+i,sum+i,goal);
+       }
+       return now;
+   }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw= new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        for(int t=1; t<=test_case; t++){
+
+            int N = Integer.parseInt(br.readLine());
+            //count sum goal
+
+
+            System.out.println(recursion(3, 0, N));
+        }
+    }
+}
