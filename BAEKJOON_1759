@@ -1,0 +1,63 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+   static boolean[] c;
+   static char[] w;
+   static int[] a;
+
+   //static StringBuilder sb =new StringBuilder();
+
+   public static StringBuilder recursion(int index, int start, int N , int M){
+       if(index==M){
+           StringBuilder sb =new StringBuilder();
+           int count=0;
+           int cnt=0;
+           for(int i=0; i<M; i++){
+               if(w[a[i]] != 'a' && w[a[i]] !='e' && w[a[i]]!='i' && w[a[i]]!='o' && w[a[i]]!='u'){
+                   count++;
+               }else{
+                   cnt++;
+               }
+
+               sb.append(w[a[i]]);
+           }
+           if(cnt>=1 && count>=2) {
+               sb.append("\n");
+               return sb;
+           }else{
+
+           }
+       }
+       StringBuilder ans = new StringBuilder();
+       for(int i=start; i<N; i++){
+           if(c[i])continue;
+           c[i]=true;
+           a[index]=i;
+           ans.append(recursion(index+1,i+1,N,M));
+           c[i]=false;
+       }
+       return ans;
+   }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int L = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+        st = new StringTokenizer(br.readLine());
+        c=new boolean[16];
+        w=new char[C];
+        a=new int[16];
+        Arrays.fill(c,false);
+        for(int i=0; i<C; i++){
+            w[i] = st.nextToken().charAt(0);
+        }
+        Arrays.sort(w);
+
+        System.out.println(recursion(0,0,C,L));
+    }
+}
