@@ -1,0 +1,42 @@
+import java.io.*;
+import java.math.BigInteger;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+        Stack<Character> s =new Stack<>();
+        for(int t=1; t<=10; t++){
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int N = Integer.parseInt(st.nextToken());
+            StringBuilder sb =new StringBuilder(st.nextToken());
+            s.clear();
+            s.push('a');
+            s.push(sb.charAt(0));
+            for (int i = 1; i < N; i++) {
+                char c = sb.toString().charAt(i);
+                if (s.peek() == c) {
+                    s.pop();
+                } else {
+                    s.push(c);
+                }
+            }
+            sb =new StringBuilder();
+            while(!s.isEmpty()){
+                if(s.peek()=='a'){
+                    break;
+                }else{
+                    sb.append(s.pop());
+                }
+            }
+
+            bw.write("#"+t+" ");
+            bw.write(sb.reverse().toString());
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+    }
+}
