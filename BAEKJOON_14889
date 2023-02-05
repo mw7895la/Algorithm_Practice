@@ -1,0 +1,63 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    static int[][] a;
+    static int N;
+
+    public static int recursion(int index, ArrayList<Integer>first,ArrayList<Integer>second){
+        if(index ==N){
+            if(first.size() != N/2)return -1;
+            if(second.size() !=N/2)return -1;
+            int t1=0;
+            int t2=0;
+            for(int i=0; i<N/2; i++){
+                for(int j=0; j<N/2; j++){
+                    if(i==j)continue;
+                    t1+=a[first.get(i)][first.get(j)];
+                    t2+=a[second.get(i)][second.get(j)];
+                }
+            }
+            int diff = Math.abs(t1-t2);
+            return diff;
+        }
+        int ans=-1;
+        first.add(index);
+        int t1 = recursion(index+1,first,second);
+        if(ans==-1 || (t1 != -1 && ans>t1)){
+            ans=t1;
+        }
+
+        first.remove(first.size()-1);
+        second.add(index);
+        int t2=recursion(index+1,first,second);
+        if(ans==-1 || (t2 !=-1 && ans>t2)){
+            ans=t2;
+        }
+        second.remove(second.size()-1);
+        return ans;
+
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        N= Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        a=new int[N][N];
+
+        for(int i=0; i<N; i++){
+            st=new StringTokenizer(br.readLine());
+            for(int j=0; j<N; j++){
+                a[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+
+        ArrayList<Integer> first = new ArrayList<>();
+        ArrayList<Integer> second = new ArrayList<>();
+
+        System.out.println(recursion(0,first,second));
+
+    }
+}
