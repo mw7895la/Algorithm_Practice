@@ -1,0 +1,47 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+
+        //7개의 수 중에서 3개의 수를 골라 합을 구한 수들로 다시 리스트로 하고, 그 중에서 5번째 큰수
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        int[] arr = new int[7];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int test_case = Integer.parseInt(st.nextToken());
+        for(int t=1; t<=test_case; t++) {
+            st = new StringTokenizer(br.readLine());
+            for (int i = 0; i < 7; i++) {
+                arr[i] = Integer.parseInt(st.nextToken());
+            }
+            HashSet<Integer> set = new HashSet<>();
+
+            for (int i = 1; i < (1 << 7); i++) {
+                int count = 0;
+                int sum = 0;
+                for (int j = 0; j < 7; j++) {
+                    if ((i & (1 << j)) != 0) {
+                        sum += arr[j];
+                        count++;
+                        if (count == 3) {
+                            break;
+                        }
+                    }
+                }
+                set.add(sum);
+
+            }
+            List<Integer> list = new ArrayList<>(set);
+            list.sort(Comparator.reverseOrder());
+            bw.write("#" + t + " ");
+            bw.write(String.valueOf(list.get(4)));
+            bw.newLine();
+            set.clear();
+            list.clear();
+        }
+        bw.flush();
+        bw.close();
+    }
+}
