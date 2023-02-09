@@ -1,0 +1,90 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    public static int[] num;
+    public static boolean[] c;
+    public static int[] a;
+
+    public static List<Integer> list;
+    public static int res_A;
+    public static int res_B;
+    public static int cnt_A;
+    public static int cnt_B;
+
+    public static void recursion(int index, int N ,int M){
+        if(index==M){
+            res_A=0;
+            res_B=0;
+            for(int i=0; i<M; i++){
+                int a1 =list.get(i);
+                int b =num[a[i]];
+                if(a1>b){
+                    res_A += a1+b;
+                }else if(a1<b){
+                    res_B+=a1+b;
+                }
+            }
+            if(res_A>res_B){
+                cnt_A++;
+            }else{
+                cnt_B++;
+            }
+            return;
+
+        }
+
+        for(int i=0; i<N; i++){
+            if(c[i])continue;
+            c[i]=true;
+            a[index]=i;
+            recursion(index + 1, N, M);
+            c[i]=false;
+
+        }
+
+    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        list = new ArrayList<>();
+        num =new int[9];
+        c=new boolean[9];
+        a=new int[9];
+        for(int t=1; t<=test_case; t++){
+            Arrays.fill(c,false);
+            st=new StringTokenizer(br.readLine());
+            //1 3 5 7 9 11 13 15 17
+            for(int i=0; i<9; i++){
+                list.add(Integer.parseInt(st.nextToken()));
+            }
+            int j=0;
+            for(int i=1; i<=18; i++){
+                if(list.contains(i)){
+                    continue;
+                }else{
+                    num[j]=i;
+                    j++;
+                    if(j==9){
+                        break;
+                    }
+                }
+            }
+            cnt_A=0;
+            cnt_B=0;
+            recursion(0,9,9);
+
+            bw.write("#"+t+" ");
+            bw.write(String.valueOf(cnt_A)+" "+String.valueOf(cnt_B));
+            bw.newLine();
+            list.clear();
+        }//testcase
+        bw.flush();
+        bw.close();
+
+    }
+}
