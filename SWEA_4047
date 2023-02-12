@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        int[][] arr;
+        StringBuilder sb;
+        for(int t=1; t<=test_case; t++){
+            arr =new int[4][13];
+            for(int i=0; i<4; i++){
+                Arrays.fill(arr[i],0);
+            }
+            int S=0,D=0,H=0,C=0;
+            sb = new StringBuilder(br.readLine());
+
+            for(int i=0; i<sb.length(); i=i+3){
+                char c = sb.charAt(i);
+                int value = Integer.parseInt(sb.substring(i+1,i+3));
+
+                switch(c){
+                    case 'S' :
+                        arr[0][value-1]++;
+                        S++;
+                        break;
+                    case 'D' :
+                        arr[1][value-1]++;
+                        D++;
+                        break;
+                    case 'H' :
+                        arr[2][value-1]++;
+                        H++;
+                        break;
+                    case 'C' :
+                        arr[3][value-1]++;
+                        C++;
+                        break;
+                }
+            }
+            sb.delete(0,sb.toString().trim().length());
+            bw.write("#"+t+" ");
+            String res="hello";
+            for(int i=0; i<13; i++){
+                if(arr[0][i]>1 || arr[1][i]>1 || arr[2][i]>1 ||arr[3][i]>1){
+                    res = "ERROR";
+                }
+            }
+
+            if(res.equals("ERROR")){
+                bw.write(res);
+            }else{
+                bw.write((13-S)+" "+(13-D)+" "+(13-H)+" "+(13-C));
+            }
+            bw.newLine();
+            bw.flush();
+        }
+        bw.close();
+    }
+}
