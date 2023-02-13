@@ -1,0 +1,51 @@
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw =new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+        int[] arr;
+        for(int t=1; t<=test_case; t++){
+            int N = Integer.parseInt(br.readLine());
+            arr= new int[N];
+
+            StringTokenizer st =new StringTokenizer(br.readLine());
+            for(int i=0; i<N; i++){
+                arr[i] = Integer.parseInt(st.nextToken());
+            }
+
+            int up=0;
+            int down=0;
+            for(int i=1; i<N; i++){
+                int num  =arr[i-1]-arr[i];
+
+                if(num<0){
+                    int x = Math.abs(num);
+                    if(up<x){
+                        up = x;
+                    }
+                }
+                if(num >0){
+                    int y = num;
+                    if(down < y){
+                        down=y;
+                    }
+                }
+                if(num==0){
+                    continue;
+                }
+            }
+            bw.write("#"+t+" ");
+            bw.write(up+" "+down);
+            bw.newLine();
+
+        }//test_case
+        bw.flush();
+        bw.close();
+    }
+}
