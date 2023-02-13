@@ -1,0 +1,38 @@
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        for(int t=1; t<=test_case; t++){
+            StringBuilder sb = new StringBuilder(br.readLine());
+            int res=0;
+            int cnt=0;
+            for(int i=97; i<=122; i++){
+                if(cnt == sb.length()){
+                    break;
+                }
+                if(sb.charAt(cnt) == i){
+                    if(res!=cnt){
+                        break;
+                    }
+                    res++;
+                    cnt++;
+                }else{
+                    cnt++;
+                }
+            }
+            bw.write("#"+t+" ");
+            bw.write(String.valueOf(res));
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+    }
+}
