@@ -1,0 +1,106 @@
+import java.io.*;
+import java.math.BigInteger;
+import java.util.*;
+
+class Pair{
+    int x;
+    int y;
+
+    public Pair(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
+
+public class Main {
+    static int[][] apartment;
+    static int[][] visit;
+    static int[] dx = new int[]{0,1,0,-1};
+    static int[] dy = new int[]{1,0,-1,0};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        apartment = new int[N][N];
+        visit = new int[N][N];
+        StringBuilder sb;
+        for(int i=0; i<N; i++){
+            sb =new StringBuilder(br.readLine());
+            for(int j=0; j<N; j++){
+                apartment[i][j] = sb.charAt(j)-48;
+            }
+        }
+        int cnt =0;
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(apartment[i][j]!=0 && visit[i][j]==0){
+                    dfs(apartment,visit,i,j,++cnt,N);
+                }
+            }
+        }
+
+        int[] ans = new int[cnt];
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(visit[i][j] !=0){
+                    ans[visit[i][j]-1]++;
+                }
+            }
+        }
+
+
+        Arrays.sort(ans);
+        bw.write(String.valueOf(ans.length));
+        bw.newLine();
+        for(int num : ans){
+            bw.write(String.valueOf(num));
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+
+
+    }
+    public static void bfs(int[][] apartment,int[][] visit,int x, int y, int cnt, int N){
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(x,y));
+        visit[x][y] =cnt;
+
+        while(!q.isEmpty()){
+            Pair p =q.poll();
+            x =p.x;
+            y=p.y;
+            for(int i=0; i<4; i++){
+                int nx = x + dx[i];
+                int ny = y+ dy[i];
+                if(nx>=0 && nx<N && ny>=0 && ny<N){
+                    if(visit[nx][ny]==0 && apartment[nx][ny]!=0){
+                        q.add(new Pair(nx,ny));
+                        visit[nx][ny]=cnt;
+                    }
+                }
+            }
+        }
+    }
+
+    public static void dfs(int[][] apartment,int[][] visit, int x, int y, int cnt ,int N){
+        if(visit[x][y]!=0){
+            return;
+        }
+        visit[x][y] = cnt;
+
+        for(int i=0; i<4; i++){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if(nx>=0 && nx<N && ny>=0 && ny<N){
+                if(visit[nx][ny]==0 && apartment[nx][ny]!=0){
+                    
+                    dfs(apartment,visit,nx,ny,cnt, N);
+                }
+            }
+        }
+    }
+}
