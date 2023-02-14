@@ -29,7 +29,7 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int w = Integer.parseInt(st.nextToken());
             int h = Integer.parseInt(st.nextToken());
-            if(w==0 && h==0){
+            if(w==0 && h==0){ 
                 break;
             }
             land = new int[h][w];
