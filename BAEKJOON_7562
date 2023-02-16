@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+public class Main{
+    int x;
+    int y;
+
+    public Main(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    static boolean[][] v;
+    public static int N;
+    static int goal_x;
+    static int goal_y;
+    static int[][] chess;
+    static int[] dx = new int[]{-2, -1, 1, 2, 2, 1, -1, -2};
+    static int[] dy = new int[]{1, 2, 2, 1, -1, -2, -2, -1};
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int test_case = Integer.parseInt(br.readLine());
+
+        for(int t=1; t<=test_case; t++){
+            N = Integer.parseInt(br.readLine());
+
+            v=new boolean[N][N];
+            chess = new int[N][N];
+            for(int i=0; i<N; i++){
+                Arrays.fill(v[i], false);
+                Arrays.fill(chess[i],0);
+            }
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int start_x =Integer.parseInt(st.nextToken());
+            int start_y =Integer.parseInt(st.nextToken());
+            v[start_x][start_y]=true;
+
+            st = new StringTokenizer(br.readLine());
+            goal_x = Integer.parseInt(st.nextToken());
+            goal_y = Integer.parseInt(st.nextToken());
+
+
+            if(start_x==goal_x && start_y ==goal_y){
+                bw.write("0");
+            }else {
+                bfs(start_x,start_y);
+                bw.write(String.valueOf(chess[goal_x][goal_y]));
+            }
+            bw.newLine();
+            bw.flush();
+
+        }
+        bw.close();
+    }
+
+    public static void bfs(int x, int y){
+        Queue<Main> q = new LinkedList<>();
+        q.add(new Main(x,y));
+        v[x][y]=true;
+
+        while (!q.isEmpty()) {
+            Main m = q.poll();
+            x = m.x;
+            y = m.y;
+            for(int i=0; i<8; i++){
+                int nx = x+dx[i];
+                int ny = y+dy[i];
+                if(nx<N && ny <N && nx>=0 && ny>=0 && v[nx][ny]==false){
+                    chess[nx][ny] = chess[x][y]+1;
+                    v[nx][ny]=true;
+                    q.add(new Main(nx, ny));
+                }
+                if(nx==goal_x && ny==goal_y){
+                    return;
+                }
+            }
+        }
+    }
+}
