@@ -1,0 +1,84 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    int x;
+    int y;
+
+    public Main(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    static int M;
+    static int N;
+    static int[][] tom;
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static Queue<Main> q = new LinkedList<>();
+    static int max=Integer.MIN_VALUE;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        M = Integer.parseInt(st.nextToken());
+        N = Integer.parseInt(st.nextToken());
+        tom = new int[N][M];
+
+        for(int i=0; i<N; i++){
+            st = new StringTokenizer(br.readLine());
+            for(int j=0; j<M; j++){
+                tom[i][j] = Integer.parseInt(st.nextToken());
+                if(tom[i][j]==1){
+                    q.add(new Main(i, j));
+                }
+            }
+        }
+
+        bw.write(String.valueOf(bfs()));
+        bw.flush();
+        bw.close();
+    }
+
+    public static int bfs(){
+
+        while(!q.isEmpty()){
+            Main m = q.poll();
+            int x = m.x;
+            int y = m.y;
+            for(int i=0; i<4; i++){
+                int nx = x + dx[i];
+                int ny = y+ dy[i];
+                if(ny>=0 && nx>=0 && ny<M && nx <N && tom[nx][ny]==0){
+                    tom[nx][ny]= tom[x][y]+1;
+
+                    q.add(new Main(nx,ny));
+                }
+            }
+        }
+
+        if(check_group()){
+            return -1;
+        }else{
+            for(int i=0; i<N; i++){
+                for(int j=0; j<M; j++){
+                    if(max < tom[i][j]){
+                        max = tom[i][j];
+                    }
+                }
+            }
+            return max -1;
+        }
+    }
+    public static boolean check_group(){
+        for(int i=0; i<N; i++){
+            for(int j=0; j<M; j++){
+                if(tom[i][j]==0){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
