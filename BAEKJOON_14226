@@ -1,0 +1,55 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        Queue<Integer>q =new LinkedList<>();
+        int[][] dist = new int[N+1][N+1];
+
+        for(int i=0; i<N+1; i++){
+            Arrays.fill(dist[i], -1);
+        }
+
+        dist[1][0] = 0;     //방문  ,  -1이면 방문 X
+        q.add(1);
+        q.add(0);
+
+        while (!q.isEmpty()) {
+            int s = q.poll();
+            int c = q.poll();
+
+            //화면에서 클립보드로 복사.
+            if (dist[s][s] == -1) {
+                dist[s][s] = dist[s][c] + 1;
+                q.add(s);
+                q.add(s);
+            }
+
+            if (s + c <= N && dist[s + c][c] == -1) {
+                dist[s+c][c] = dist[s][c]+1;
+                q.add(s+c); q.add(c);
+            }
+
+            if (s - 1 >= 0 && dist[s - 1][c] == -1) {
+                dist[s-1][c] =dist[s][c]+1;
+                q.add(s-1); q.add(c);
+            }
+        }
+        int ans =-1;
+        for(int i=0; i<=N; i++){
+            if(dist[N][i]!=-1){
+                if (ans == -1 || ans > dist[N][i]) {
+                    ans = dist[N][i];
+                }
+            }
+        }
+        bw.write(String.valueOf(ans));
+        bw.flush();
+        bw.close();
+    }
+
+}
