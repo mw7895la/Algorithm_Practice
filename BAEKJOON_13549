@@ -1,0 +1,51 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+public class Main {
+
+    static int[] dist = new int[100001];
+    static boolean[] visit = new boolean[100001];
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
+        dist[N]=0;
+        visit[N]=true;
+        Queue<Integer> q = new LinkedList<>();
+        Queue<Integer> next_q = new LinkedList<>();
+
+        q.add(N);
+
+        while (!q.isEmpty()) {
+            int now = q.poll();
+            for (int next : new int[]{now * 2, now - 1, now + 1}) {
+                if (next >= 0 && next < 100001) {
+                    if (visit[next] == false) {
+                        visit[next] = true;
+                        if (next == now * 2) {
+                            q.add(next);
+                            dist[next] = dist[now];
+                        } else {
+                            next_q.add(next);
+                            dist[next] = dist[now] + 1;
+                        }
+                    }
+
+                }
+            }
+            if (q.isEmpty()) {
+                q = new LinkedList<>(next_q);
+                //next_q = new LinkedList<Integer>();
+                next_q.clear();
+            }
+        }
+        bw.write(String.valueOf(dist[K]));
+        bw.flush();
+        bw.close();
+    }
+}
