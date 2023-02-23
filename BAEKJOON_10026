@@ -1,0 +1,112 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+    static class Location{
+        int x;
+        int y;
+
+        public Location(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    static int N;
+    static char[][] board;
+    static boolean[][] visit;
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static int count=0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        N = Integer.parseInt(br.readLine());
+        board = new char[N][N];
+        visit = new boolean[N][N];
+        StringBuilder sb;
+        for(int i=0; i<N; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<N; j++){
+                board[i][j] = sb.toString().charAt(j);
+            }
+        }
+
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(visit[i][j]==false){
+                    count++;
+                    DFS_1(i,j,board[i][j]);
+                }
+            }
+        }
+        bw.write(String.valueOf(count));
+        convert_board(board);
+        init_visit(visit);
+        count =0;
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if(visit[i][j]==false){
+                    count++;
+                    DFS_2(i,j,board[i][j]);
+                }
+            }
+        }
+        bw.write(String.valueOf(" "+count));
+
+
+        bw.newLine();
+        bw.flush();
+        bw.close();
+    }
+    public static void DFS_1(int x,int y,char color){
+        if(visit[x][y]){
+            return;
+        }
+        visit[x][y] =true;
+
+        for(int i=0; i<4; i++){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
+            if (nx < N && ny < N && nx >= 0 && ny >= 0 && board[nx][ny]==color) {
+                if (!visit[nx][ny]) {
+                    DFS_1(nx, ny,board[nx][ny]);
+                }
+            }
+        }
+    }
+
+    public static void DFS_2(int x, int y, char color) {
+        if (visit[x][y]) {
+            return;
+        }
+        visit[x][y] =true;
+
+        for(int i=0; i<4; i++){
+            int nx = x +dx[i];
+            int ny = y +dy[i];
+            if (nx < N && ny < N && nx >= 0 && ny >= 0 && board[nx][ny] == color) {
+                if (!visit[nx][ny]) {
+                    DFS_2(nx, ny, board[nx][ny]);
+                }
+            }
+        }
+    }
+
+    public static void init_visit(boolean[][] visit){
+        for(int i=0; i<N; i++){
+            Arrays.fill(visit[i], false);
+        }
+    }
+
+    public static void convert_board(char[][] board){
+        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                if (board[i][j] == 'G') {
+                    board[i][j] = 'R';
+                }
+            }
+        }
+    }
+}
