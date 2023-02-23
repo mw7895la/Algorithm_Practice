@@ -1,0 +1,90 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+    static class Location{
+        int x;
+        int y;
+
+        public Location(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static boolean[][] visit;
+    static int N;
+    static int M;
+    static int[][] room;
+    static int[][] dist;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb;
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        room = new int[M][N];       //N = 4 M =2    2*4행렬
+        dist = new int[M][N];
+        visit = new boolean[M][N];
+        Queue<Location> q = new LinkedList<>();
+        Queue<Location>next_q = new LinkedList<>();
+
+        for(int i=0; i<M; i++){
+            sb =new StringBuilder(br.readLine());
+            for(int j=0; j<N; j++){
+                room[i][j] = sb.toString().charAt(j)-48;
+            }
+        }
+
+        q.add(new Location(0, 0));
+        visit[0][0] = true;
+        while(!q.isEmpty()){
+            Location l = q.poll();
+            int x = l.x;
+            int y = l.y;
+
+            for(int i=0; i<4; i++){
+                int nx = x+dx[i];
+                int ny = y+dy[i];
+                if (nx < M && ny < N && nx >= 0 && ny >= 0 && visit[nx][ny]==false) {
+                    if(room[x][y] == room[nx][ny]){
+                        if(room[nx][ny]==1){
+                            dist[nx][ny]=dist[x][y] +1;
+                            next_q.add(new Location(nx, ny));
+                        }else{
+                            dist[nx][ny]=dist[x][y];
+                            q.add(new Location(nx, ny));
+                        }
+                        visit[nx][ny]=true;
+
+                    }
+                    if (room[x][y] != room[nx][ny]) {
+                        if(room[nx][ny]==0){
+                            dist[nx][ny] = dist[x][y];
+                            q.add(new Location(nx, ny));
+                        }else{
+                            dist[nx][ny] = dist[x][y] + 1;
+                            next_q.add(new Location(nx, ny));
+                        }
+                        visit[nx][ny]=true;
+
+                    }
+                }
+            }
+            if(q.isEmpty()){
+                q = new LinkedList<Location>(next_q);
+                next_q.clear();
+            }
+        }
+
+        bw.write(String.valueOf(dist[M - 1][N - 1]));
+        bw.flush();
+        bw.close();
+    }
+}
