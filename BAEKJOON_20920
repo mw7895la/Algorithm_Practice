@@ -1,0 +1,74 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int M = Integer.parseInt(st.nextToken());
+
+        Map<String, Integer> map = new HashMap<>();
+        StringBuilder sb;
+        for(int i=0; i<N; i++){
+            sb = new StringBuilder(br.readLine());
+            if(sb.toString().length() <=M-1) {
+                continue;
+            }else {
+                if (map.containsKey(sb.toString())) {
+                    map.put(sb.toString(), map.get(sb.toString()) + 1);
+                } else {
+                    map.put(sb.toString(), 0);
+                }
+            }
+
+        }
+        List<Alphabet> list = new ArrayList<>();
+        for (Map.Entry<String, Integer> Entry : map.entrySet()) {
+            list.add(new Alphabet(Entry.getKey(), Entry.getValue()));
+        }
+
+        Collections.sort(list,new Comparator<Alphabet>(){
+            @Override
+            public int compare(Alphabet o1, Alphabet o2) {
+
+                if(o1.getCount() == o2.getCount()){
+                    if (o1.getName().length() == o2.getName().length()) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                    return o2.getName().length() - o1.getName().length();
+                }
+                return o2.getCount() - o1.getCount();
+            }
+        });
+        for(int i=0; i<list.size(); i++){
+            bw.write(list.get(i).getName());
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+    }
+
+    static class Alphabet {
+        private String name;
+        private int count;
+
+        public Alphabet(String name, int count) {
+            this.name = name;
+            this.count = count;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public int getCount() {
+            return count;
+        }
+
+    }
+}
