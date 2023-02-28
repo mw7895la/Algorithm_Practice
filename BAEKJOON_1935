@@ -1,0 +1,48 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+
+        Stack<Double> s = new Stack<>();
+        Map<Character, Double> m = new HashMap<>();
+        int input = Integer.parseInt(br.readLine());
+
+        StringBuilder sb = new StringBuilder(br.readLine());
+        //   ABC*+DE/-
+        double[] arr = new double[input];
+        for (int i = 0; i < input; i++) {
+            double num = Double.parseDouble(br.readLine());
+            arr[i] = num;
+        }
+
+        for (int i = 0; i < sb.length(); i++) {
+            char c = sb.toString().charAt(i);
+            if(c>=65 && c<=90){
+                s.push(arr[c-'A']);
+            }else{
+                double b= s.pop();
+                double a= s.pop();
+                if(c=='*'){
+                    s.push(a*b);
+                } else if (c == '/') {
+                    s.push(a / b);
+                } else if (c == '+') {
+                    s.push(a+b);
+                }else{
+                    s.push(a - b);
+                }
+            }
+        }
+        if (!s.isEmpty()) {
+            System.out.printf("%.2f",s.pop());
+        }
+
+    }
+
+
+}
