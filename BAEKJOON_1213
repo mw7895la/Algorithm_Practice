@@ -1,0 +1,52 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int[] alph = new int[26];
+
+        int mid_idx = 0;
+        int odd =0;
+
+        StringBuilder sb = new StringBuilder(br.readLine());
+        for(int i=0; i<sb.toString().length(); i++){
+            alph[sb.toString().charAt(i)-'A']++;
+        }
+
+        for(int i=0; i<26; i++){
+            if(alph[i]%2 !=0){
+                mid_idx=i;
+                odd++;
+            }
+        }
+
+        if ((sb.toString().length() % 2 != 0 && odd > 1) || (sb.toString().length() % 2 == 0 && odd > 0)) {
+            bw.write("I'm Sorry Hansoo");
+        }else{
+            sb = new StringBuilder("");
+            for(int i=0; i<alph.length; i++){
+                for(int j=0; j<alph[i]/2; j++){
+                    sb.append((char) (i + 'A'));
+                }
+            }
+            String ans = sb.toString();
+            String reverse_ans = sb.reverse().toString();
+
+            if(odd==1){
+                ans+=(char)(mid_idx + 'A');
+            }
+
+
+            bw.write(ans+reverse_ans);
+        }
+
+        bw.flush();
+        bw.close();
+    }
+
+}
