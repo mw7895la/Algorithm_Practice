@@ -1,0 +1,87 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+
+public class Main {
+    int x;
+    int y;
+    int dist;
+    int boom;
+
+    public Main(int x, int y, int dist, int boom) {
+        this.x = x;
+        this.y = y;
+        this.dist = dist;
+        this.boom = boom;
+    }
+
+
+
+    static int N;
+    static int M;
+    static int[][] Map;
+    static boolean[][][] visit;
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static int result=-1;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        Map = new int[N][M];
+        visit = new boolean[N][M][2];
+        
+        StringBuilder sb;
+        for(int i=0; i<N; i++){
+            sb =new StringBuilder(br.readLine());
+            for (int j = 0; j < M; j++) {
+                int num =sb.toString().charAt(j)-48;
+                Map[i][j] =num;
+            }
+        }
+
+        BFS();
+        bw.write(String.valueOf(result));
+
+        bw.flush();
+        bw.close();
+    }
+
+    public static void BFS(){
+        Queue<Main> q2 = new LinkedList<>();
+        visit[0][0][0]=true;
+        q2.add(new Main(0, 0,1,0));
+        while (!q2.isEmpty()) {
+            Main m = q2.poll();
+            int x = m.x;
+            int y = m.y;
+            if (x == N - 1 && y == M - 1) {
+                result = m.dist;
+                return;
+            }
+            for(int i=0; i<4; i++){
+                int nx = x + dx[i];
+                int ny = y + dy[i];
+                if (nx < N && ny < M && nx >= 0 && ny >= 0) {
+
+                    if (Map[nx][ny] == 0 && !visit[nx][ny][m.boom]) {
+                        visit[nx][ny][m.boom]=true;
+                        q2.add(new Main(nx, ny, m.dist + 1, m.boom));
+                    }else{
+                        //벽이 있는 경우
+                        if (m.boom == 0 && !visit[nx][ny][m.boom + 1]) {
+                            visit[nx][ny][m.boom + 1]=true;
+                            q2.add(new Main(nx, ny, m.dist + 1, m.boom + 1));
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+}
