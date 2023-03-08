@@ -1,0 +1,46 @@
+import java.io.*;
+import java.sql.Array;
+import java.util.*;
+
+
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N =Integer.parseInt(br.readLine());
+
+        String pattern = br.readLine();
+
+        StringTokenizer st = new StringTokenizer(pattern, "*");
+
+        String front = st.nextToken();
+        int f_length = front.length();
+        String back = st.nextToken();
+        int b_length = back.length();
+
+        boolean ok;
+        StringBuilder sb;
+        for(int i=0; i<N; i++){
+            ok=false;
+            sb = new StringBuilder(br.readLine());
+            if ((sb.toString().length() >= f_length+b_length)&&sb.substring(0, f_length).equals(front)) {
+                sb.delete(0, f_length);
+                if ((sb.toString().length()>=b_length)&& sb.substring(sb.toString().length() - b_length, sb.toString().length()).equals(back)) {
+                    ok=true;
+                }
+            }
+            if(ok){
+                bw.write("DA");
+            }else{
+                bw.write("NE");
+            }
+            bw.newLine();
+            bw.flush();
+        }
+        bw.close();
+    }
+
+
+}
