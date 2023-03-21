@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
+
+
+public class Main {
+
+    static int R;
+    static int C;
+    static int[][] board;
+    static int max=0;
+    static boolean[] visit;
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        board = new int[R][C];
+        for(int i=0; i<R; i++){
+            String str = br.readLine();
+            for(int j=0; j<C; j++){
+                board[i][j]= str.charAt(j)-'A';
+            }
+        }
+
+        visit = new boolean[26];
+
+        DFS(0,0,1);
+
+        bw.write(String.valueOf(max));
+        bw.flush();
+        bw.close();
+
+    }
+    public static void DFS(int start,int end,int len) {
+        if (visit[board[start][end]]) {
+            return;
+        }
+        max = Math.max(len,max);
+        visit[board[start][end]]=true;
+
+        for(int i=0; i<4; i++){
+            int nx = start +dx[i];
+            int ny = end +dy[i];
+            if (nx < R && ny < C && nx >= 0 && ny >= 0) {
+                if (!visit[board[nx][ny]]) {
+                    DFS(nx, ny, len + 1);
+                    visit[board[nx][ny]]=false;
+                }
+            }
+        }
+    }
+}
+
