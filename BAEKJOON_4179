@@ -1,0 +1,113 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    int x;
+    int y;
+    int dist;
+
+    public Main(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Main(int x, int y, int dist) {
+        this.x = x;
+        this.y = y;
+        this.dist = dist;
+    }
+
+    static int R;
+    static int C;
+    static int[][] visited;
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static int max =0;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+
+        visited = new int[R + 2][C + 2];
+
+        StringBuilder sb = null;
+        Main Person=null;
+        Queue<Main> fires = new LinkedList<>();
+        for(int i=1; i<=R; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=1; j<=C; j++){
+                char c = sb.toString().charAt(j - 1);
+                if (c == 'J') {
+                    Person = new Main(i, j, 0);
+                }
+                if (c == 'F') {
+                    visited[i][j]= -1;
+                    fires.add(new Main(i, j));
+                }
+                if (c == '#') {
+                    visited[i][j]= -1;
+                }
+            }
+        }
+        max = Integer.MAX_VALUE;
+        BFS(Person, fires, visited);
+
+        if (max != Integer.MAX_VALUE) {
+            bw.write(String.valueOf(max));
+        }else{
+            bw.write("IMPOSSIBLE");
+        }
+        bw.flush();
+        bw.close();
+    }
+    public static void BFS(Main Person, Queue<Main> fires, int[][] visited) {
+        Queue<Main> q = new LinkedList<>();
+        q.add(Person);
+        visited[Person.x][Person.y]=1;
+
+        while (!q.isEmpty()) {
+
+
+            for(int i=0, end= fires.size(); i<end; i++){
+                Main fPos = fires.poll();
+                int x = fPos.x;
+                int y = fPos.y;
+                for(int j=0; j<4; j++){
+                    int nx = x + dx[j];
+                    int ny = y +dy[j];
+                    if (nx < R + 1 && ny < C + 1 && nx > 0 && ny > 0) {
+                        if (visited[nx][ny] != -1) {
+                            visited[nx][ny]=-1;
+                            fires.add(new Main(nx, ny));
+                        }
+                    }
+                }
+            }
+
+            for(int i=0, end=q.size(); i<end; i++){
+                Main jPos = q.poll();
+                int x = jPos.x;
+                int y = jPos.y;
+                int dist = jPos.dist;
+                if (x == 0 || y == 0 || x == R + 1 || y == C + 1) {
+                    max = max > dist ? dist : max;
+                }
+                for(int j=0; j<4; j++){
+                    int nx = x + dx[j];
+                    int ny = y +dy[j];
+                    if (nx <= R + 1 && ny <= C + 1 && nx >= 0 && ny >= 0) {
+                        if (visited[nx][ny] != -1 && visited[nx][ny]!=1) {
+                            visited[nx][ny]=1;
+                            q.add(new Main(nx, ny, dist + 1));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
