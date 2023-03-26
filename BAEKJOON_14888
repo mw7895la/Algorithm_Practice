@@ -1,0 +1,83 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static int[] num;
+    static char[] operation;
+    static int[] a;
+    static boolean[] visit;
+    static ArrayList<Integer> list;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        num = new int[N];
+        operation = new char[N - 1];
+        a= new int[N-1];
+        visit = new boolean[N - 1];
+        list= new ArrayList<>();
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            num[i] = Integer.parseInt(st.nextToken());
+        }
+
+        st = new StringTokenizer(br.readLine());
+        int plus = Integer.parseInt(st.nextToken());
+        int minus = Integer.parseInt(st.nextToken());
+        int multi = Integer.parseInt(st.nextToken());
+        int divide = Integer.parseInt(st.nextToken());
+        for(int i=0; i<plus; i++){
+            operation[i] = '+';
+        }
+
+        for(int i=plus; i<plus+minus; i++){
+            operation[i] = '-';
+        }
+
+        for(int i=plus+minus; i<plus+minus+multi; i++){
+            operation[i] = '*';
+        }
+
+        for(int i=plus+minus+multi; i<plus+minus+multi+divide; i++){
+            operation[i] = '/';
+        }
+
+        recursion(0, N, N-1);
+
+        list.sort(Comparator.naturalOrder());
+        bw.write(list.get(list.size() - 1) + "\n" + list.get(0));
+        bw.flush();
+        bw.close();
+
+    }
+
+    public static void recursion(int index, int N, int M) {
+        if (index == M) {
+            int res=num[0];
+            for(int i=1; i<N; i++){
+                if (operation[a[i - 1]] == '+') {
+                    res = res + num[i];
+                } else if (operation[a[i - 1]] == '-') {
+                    res = res -num[i];
+                } else if (operation[a[i - 1]] == '*') {
+                    res = res * num[i];
+                }else{
+                    res = res / num[i];
+                }
+            }
+            list.add(res);
+            return;
+        }
+
+        for(int i=0; i<M; i++){
+            if(visit[i])continue;
+            visit[i] = true;
+            a[index]=i;
+            recursion(index+1,N,M);
+            visit[i]=false;
+        }
+    }
+}
+
+
