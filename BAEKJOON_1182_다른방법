@@ -1,0 +1,43 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        int N = Integer.parseInt(st.nextToken());
+        int S = Integer.parseInt(st.nextToken());
+
+        int[] arr = new int[N];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            arr[i] = Integer.parseInt(st.nextToken());
+        }
+
+        int ans = go(arr, S, 0, 0);
+
+        if(S==0){
+            ans-=1;
+        }
+        bw.write(String.valueOf(ans));
+        bw.flush();
+        bw.close();
+    }
+
+    private static int go(int[] arr, int s, int index, int sum) {
+        if (index == arr.length) {
+            if (sum == s) {
+                return 1;
+            }else{
+                return 0;
+            }
+        }
+        return go(arr, s, index + 1, sum + arr[index]) + go(arr, s, index + 1, sum);
+    }
+
+}
+
+
