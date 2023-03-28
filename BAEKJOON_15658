@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    int min,max;
+
+    public Main(int min, int max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        int N = Integer.parseInt(br.readLine());
+        int[] a = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            a[i] = Integer.parseInt(st.nextToken());
+        }
+
+        st = new StringTokenizer(br.readLine());
+        int plus = Integer.parseInt(st.nextToken());
+        int minus = Integer.parseInt(st.nextToken());
+        int mul = Integer.parseInt(st.nextToken());
+        int dev = Integer.parseInt(st.nextToken());
+
+        Main m = calc(a, 1, a[0], plus, minus, mul, dev);
+
+        bw.write(String.valueOf(m.max));
+        bw.newLine();
+        bw.write(String.valueOf(m.min));
+        bw.flush();
+        bw.close();
+    }
+
+    private static Main calc(int[] a, int index, int cur, int plus, int minus, int mul, int dev) {
+        int n = a.length;
+        if(index ==n){
+            return new Main(cur, cur);
+        }
+
+        ArrayList<Main> res = new ArrayList<>();
+        if(plus >0){
+            res.add(calc(a, index + 1, cur + a[index], plus - 1, minus, mul, dev));
+        }
+        if(minus >0){
+            res.add(calc(a, index + 1, cur - a[index], plus, minus-1, mul, dev));
+        }
+        if(mul >0){
+            res.add(calc(a, index + 1, cur * a[index], plus , minus, mul-1, dev));
+        }
+        if(dev >0){
+            res.add(calc(a, index + 1, cur / a[index], plus , minus, mul, dev-1));
+        }
+
+        Main ans = res.get(0);
+        for (Main ma : res) {
+            if (ans.max < ma.max) {
+                ans.max = ma.max;
+            }
+            if (ans.min > ma.min) {
+                ans.min = ma.min;
+            }
+        }
+
+        return ans;
+    }
+
+}
