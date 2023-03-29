@@ -1,0 +1,85 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static int N;
+    static int M;
+    static char[][] board;
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        board = new char[N][M];
+        int x1,x2,y1,y2;
+        x1=x2=y1=y2=-1;
+
+        StringBuilder sb=null;
+        for(int i=0; i<N; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<M; j++){
+                board[i][j] = sb.charAt(j);
+                if (board[i][j] == 'o') {
+                    if(x1==-1){
+                        x1=i;
+                        y1=j;
+                    }else{
+                        x2=i;
+                        y2=j;
+                    }
+                    board[i][j]='.';
+                }
+            }
+        }
+
+        int ans = go(0, x1, y1, x2, y2);
+
+        bw.write(String.valueOf(ans));
+        bw.flush();
+        bw.close();
+    }
+
+    public static int go(int step, int x1, int y1, int x2, int y2) {
+        if(step >10){
+            return -1;
+        }
+        boolean fall_1 =false;
+        boolean fall_2=false;
+        if(x1<0 || y1<0 || x1>=N || y1>=M)fall_1=true;
+        if(x2<0 || y2<0 || x2>=N || y2>=M)fall_2=true;
+        if(fall_1 && fall_2)return -1;
+        if(fall_1 || fall_2)return step;
+        int ans =-1;
+
+        for(int i=0; i<4 ;i++){
+            int nx1 = x1 +dx[i];
+            int ny1 = y1 +dy[i];
+            int nx2 = x2 +dx[i];
+            int ny2 = y2 +dy[i];
+
+            if (nx1 >= 0 && nx1 < N && ny1 >= 0 && ny1 < M && board[nx1][ny1] == '#') {
+                nx1 = x1;
+                ny1 = y1;
+            }
+            if (nx2 >= 0 && nx2 < N && ny2 >= 0 && ny2 < M && board[nx2][ny2] == '#') {
+                nx2 = x2;
+                ny2 = y2;
+            }
+
+            int temp = go(step+1,nx1,ny1,nx2,ny2);
+            if(temp ==-1)continue;
+            if(ans ==-1 || ans> temp){
+                ans = temp;
+            }
+        }
+        return ans;
+    }
+
+
+}
