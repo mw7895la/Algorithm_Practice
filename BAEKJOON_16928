@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    int pos;
+    int dist;
+
+    public Main(int pos, int dist) {
+        this.pos = pos;
+        this.dist = dist;
+    }
+    static int N;
+    static int M;
+    static HashMap<Integer,Integer> map;
+    static int min = Integer.MAX_VALUE;
+    static boolean[] visit;
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+
+        map = new HashMap<>();
+        visit = new boolean[101];
+        for(int i=0; i<N+M; i++){
+            st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            map.put(x, y);
+        }
+
+        BFS(1);
+
+        bw.write(String.valueOf(min));
+        bw.flush();
+        bw.close();
+    }
+    public static void BFS(int start) {
+        Queue<Main> q = new LinkedList<>();
+
+        q.add(new Main(start, 0));
+
+        while (!q.isEmpty()) {
+
+            Main m = q.poll();
+            int pos = m.pos;
+            int dist = m.dist;
+            if(pos == 100){
+                if(min > dist){
+                    min = dist;
+                    return;
+                }
+            }
+
+            if(pos <100) {
+                for (int i = 1; i <= 6; i++) {
+                    int dice = i;
+                    if (pos + dice > 100 || visit[pos+dice]) continue;
+                    visit[pos+dice]=true;
+                    boolean check = true;
+                    if(map.size() !=0) {
+                        for (int next : map.keySet()) {
+                            if (pos + dice == next) {
+                                q.add(new Main(map.get(next), dist + 1));
+                                check = false;
+                            }
+                        }
+                    }
+                    if (check) {
+                        q.add(new Main(pos + dice, dist + 1));
+                    }
+                }
+            }
+        }
+
+    }
+}
