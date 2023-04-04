@@ -1,0 +1,105 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    int x;
+    int y;
+
+    public Main(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    static int[] dx = new int[]{0, 1, 0, -1};
+    static int[] dy = new int[]{1, 0, -1, 0};
+    static int[][] board;
+    static boolean[][] visit;
+    static int[][] group;
+    static int N;
+    static int M;
+    static ArrayList<Integer> list = new ArrayList<>();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        StringBuilder sb;
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        board = new int[N][M];
+        visit = new boolean[N][M];
+        group = new int[N][M];
+        for(int i=0; i<N; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<M; j++){
+                board[i][j] = sb.charAt(j)-'0';
+                group[i][j] =-1;
+            }
+        }
+        for(int i=0; i<N; i++){
+            for(int j=0; j<M; j++){
+                if(!visit[i][j] && board[i][j]==0){
+                    BFS(i,j);
+                }
+            }
+        }
+
+        for(int i=0; i<N; i++){
+            for(int j=0; j<M; j++){
+                if(board[i][j]==0){
+                    bw.write("0");
+                }else{
+                    HashSet<Integer> h_map = new HashSet<>();
+
+                    for(int k=0; k<4; k++){
+                        int x = i+dx[k];
+                        int y = j+dy[k];
+                        if(x<N && y<M && x>=0 && y>=0){
+                            if(board[x][y]==0){
+                                h_map.add(group[x][y]);
+                            }
+                        }
+                    }
+
+                    int ans =1;
+                    for(int num : h_map){
+                        ans += list.get(num);
+                    }
+                    bw.write(String.valueOf(ans%10));
+
+                }
+
+
+            }
+            bw.newLine();
+        }
+        bw.flush();
+        bw.close();
+    }
+
+    public static void BFS(int x,int y){
+        int g = list.size();
+        Queue<Main> q = new LinkedList<>();
+        q.add(new Main(x, y));
+        visit[x][y]=true;
+        group[x][y]=g;
+        int cnt =1;
+        while (!q.isEmpty()) {
+            Main m =q.poll();
+            int xpos = m.x;
+            int ypos = m.y;
+            for(int i=0; i<4; i++){
+                int nx = xpos+dx[i];
+                int ny = ypos+dy[i];
+                if(nx<N && ny<M && nx>=0 && ny>=0 && board[nx][ny]==0){
+                    if(!visit[nx][ny]){
+                        visit[nx][ny]=true;
+                        cnt++;
+                        q.add(new Main(nx,ny));
+                        group[nx][ny]=g;
+                    }
+                }
+            }
+        }
+        list.add(cnt);
+    }
+}
