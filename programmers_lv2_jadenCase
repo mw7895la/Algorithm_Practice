@@ -1,0 +1,26 @@
+class Solution {
+    public String solution(String s) {
+        StringBuilder sb = new StringBuilder(s.toLowerCase());
+        StringBuilder result = new StringBuilder();
+        
+        result.append(String.valueOf(sb.charAt(0)).toUpperCase());
+        
+        for(int i=1; i<sb.length(); i++){
+            if(sb.charAt(i-1)==' '){
+                result.append(String.valueOf(sb.charAt(i)).toUpperCase());
+            }else{
+                if(sb.charAt(i)>='A' && sb.charAt(i)<='Z'){
+                    result.append((char)(sb.charAt(i)+32));
+                }else{
+                    result.append(sb.charAt(i));
+                }
+            }
+        }
+        
+        String answer = result.toString();
+        return answer;
+    }
+}
+
+// toUpperCase() 나 toLowerCase()는 알파멧에만 적용되고,  
+// 다른 문자들에겐 적용되지 않는다.
