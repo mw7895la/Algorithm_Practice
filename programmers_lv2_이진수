@@ -1,0 +1,33 @@
+class Solution {
+    public int solution(int n) {
+        
+        int max = 1000000;
+        for(int i=n+1; i<1000000; i++){
+            String origin = Integer.toBinaryString(n);
+            String check = Integer.toBinaryString(i);
+            int origin_count =0;
+            int check_count =0;
+            for(int j=0; j<origin.length(); j++){
+                if(origin.charAt(j)=='1'){
+                    origin_count++;
+                }
+            }
+            
+            for(int j=0; j<check.length(); j++){
+                if(check.charAt(j)=='1'){
+                    check_count++;
+                }
+            }
+            if((origin_count==check_count) && n < i){
+                max = i;
+                break;
+            }
+        }
+        
+        int answer = max;
+        return answer;
+    }
+}
+
+String result = Integer.toBinaryString(int num);    // 숫자를 2진수 문자열로 변환
+int num = Integer.parseInt("10", 2);                //문자열 10을 2진수 정수로 변환  
