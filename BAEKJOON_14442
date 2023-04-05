@@ -1,0 +1,97 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    int x;
+    int y;
+    int dist;
+    int wall;
+
+    public Main(int x, int y, int dist, int wall) {
+        this.x = x;
+        this.y = y;
+        this.dist = dist;
+        this.wall = wall;
+    }
+
+    static int N;
+    static int M;
+    static int K;
+
+    static boolean[][][] visit;
+    static int[][] board;
+    static int min = Integer.MAX_VALUE;
+
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        StringBuilder sb;
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+
+        board = new int[N][M];
+        visit = new boolean[N][M][K + 1];
+
+        for (int i = 0; i < N; i++) {
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<M; j++){
+                board[i][j] = sb.charAt(j)-'0';
+            }
+        }
+
+        BFS(0,0);
+
+        if (min == Integer.MAX_VALUE) {
+            bw.write("-1");
+        }else{
+            bw.write(String.valueOf(min));
+        }
+        bw.flush();
+        bw.close();
+
+    }
+
+    public static void BFS(int xpos, int ypos) {
+        Queue<Main> q = new LinkedList<>();
+        q.add(new Main(xpos, ypos, 1, 0));
+
+        visit[xpos][ypos][0]=true;
+
+        while (!q.isEmpty()) {
+            Main m = q.poll();
+            int x = m.x;
+            int y = m.y;
+            int dist = m.dist;
+            if(x==N-1 && y == M-1){
+                if(min > dist){
+                    min =dist;
+                }
+                return;
+            }
+
+            for(int i=0; i<4; i++){
+                int nx = x +dx[i];
+                int ny = y +dy[i];
+                if(nx<N && ny<M && nx>=0 && ny>=0){
+                    //벽이 아닐 떄
+                    if(board[nx][ny]==0 && !visit[nx][ny][m.wall]){
+                        visit[nx][ny][m.wall]=true;
+                        q.add(new Main(nx, ny, dist + 1, m.wall));
+                    } else {
+
+                        if (m.wall<K && board[nx][ny]==1 && !visit[nx][ny][m.wall+1]) {
+                            //벽이 있을 때,
+                            visit[nx][ny][m.wall+1]=true;
+                            q.add(new Main(nx, ny, dist + 1, m.wall + 1));
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
