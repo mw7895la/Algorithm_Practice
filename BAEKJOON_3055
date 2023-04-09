@@ -1,0 +1,134 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    int x;
+    int y;
+    int dist;
+
+    public Main(int x, int y, int dist) {
+        this.x = x;
+        this.y = y;
+        this.dist = dist;
+    }
+    static class Water{
+        int x;
+        int y;
+
+        public Water(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+    static int R;
+    static int C;
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+    static char[][] forest;
+    static int xD;
+    static int yD;
+    static Queue<Water> q;
+    static boolean[][] visit_S;
+    static boolean[][] visit_W;
+    static int min = Integer.MAX_VALUE;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        R = Integer.parseInt(st.nextToken());
+        C = Integer.parseInt(st.nextToken());
+        q=new LinkedList<>();
+        forest = new char[R][C];
+        visit_S = new boolean[R][C];
+        visit_W = new boolean[R][C];
+        StringBuilder sb;
+        int xS=0;
+        int yS=0;
+        for(int i=0; i<R; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<C; j++){
+                forest[i][j] = sb.charAt(j);
+
+                if (sb.charAt(j) == 'D') {
+                    xD=i;
+                    yD=j;
+                }
+                if(sb.charAt(j)=='S'){
+                    xS=i;
+                    yS=j;
+                }
+                if (sb.charAt(j) == '*') {
+                    q.add(new Water(i, j));
+                }
+            }
+        }
+        BFS(q,xS,yS);
+
+        if (min == Integer.MAX_VALUE) {
+            bw.write("KAKTUS");
+        }else{
+            bw.write(String.valueOf(min));
+        }
+        bw.flush();
+        bw.close();
+
+
+    }
+
+    public static void BFS(Queue<Water> water,int xS,int yS){
+        Queue<Main> s = new LinkedList<>();
+        s.add(new Main(xS, yS, 0));
+        int x; int y;
+        int w_x; int w_y;
+        int nx; int ny;
+        int w_nx; int w_ny;
+        while (!s.isEmpty()) {
+            for(int k=0,end=s.size(); k<end; k++) {
+                Main m = s.poll();
+                x = m.x;
+                y = m.y;
+                int dist = m.dist;
+                if(forest[x][y]=='*')continue;
+                if (x == xD && y == yD) {
+                    if (min > dist) {
+                        min = dist;
+
+                    }
+                    return;
+                }
+                for (int i = 0; i < 4; i++) {
+                    nx = x + dx[i];
+                    ny = y + dy[i];
+                    if (nx < R && ny < C && nx >= 0 && ny >= 0 && !visit_S[nx][ny]) {
+                        if (forest[nx][ny] != '*' && forest[nx][ny] != 'X') {
+                            visit_S[nx][ny]=true;
+                            s.add(new Main(nx, ny, dist + 1));
+                        }
+                    }
+                }
+
+            }
+            for(int l=0,end_water=water.size(); l<end_water; l++){
+                Water w = water.poll();
+                w_x = w.x;
+                w_y = w.y;
+                for(int i=0; i<4; i++){
+                    w_nx = w_x + dx[i];
+                    w_ny = w_y + dy[i];
+                    if(w_nx<R && w_ny <C && w_nx>=0 && w_ny >=0 && !visit_W[w_nx][w_ny]){
+                        if (forest[w_nx][w_ny] != 'D' && forest[w_nx][w_ny] != 'X') {
+                            visit_W[w_nx][w_ny]=true;
+                            forest[w_nx][w_ny]='*';
+                            water.add(new Water(w_nx, w_ny));
+                        }
+                    }
+                }
+            }
+
+        }
+
+    }
+}
+
