@@ -25,7 +25,7 @@ public class Main {
         for (int i = 1; i < N; i++) {
             D[i] = Math.max(D[i - 1] + A[i], A[i]);
         }
-
+ 
         Arrays.sort(D);
 
         bw.write(String.valueOf(D[D.length - 1]));
