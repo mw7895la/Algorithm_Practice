@@ -1,0 +1,91 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    int x;
+    int y;
+
+    public Main(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+
+    static char[][] map;
+    static int H;
+    static int W;
+    static boolean[][] visit;
+    static int c_x1=-1;
+    static int c_y1=-1;
+    static int c_x2=-1;
+    static int c_y2=-1;
+    static int[][] dist;
+    static int min = Integer.MAX_VALUE;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+
+        W = Integer.parseInt(st.nextToken());
+        H = Integer.parseInt(st.nextToken());
+        map = new char[H][W];
+        visit = new boolean[H][W];
+        dist = new int[H][W];
+        for(int i=0; i<H; i++){
+            Arrays.fill(dist[i], -1);
+        }
+        StringBuilder sb;
+        for(int i=0; i<H; i++){
+            sb = new StringBuilder(br.readLine());
+            for(int j=0; j<W; j++){
+                map[i][j] = sb.charAt(j);
+                if (map[i][j] == 'C') {
+                    if(c_x1==-1){
+                        c_x1=i;
+                        c_y1=j;
+                        dist[c_x1][c_y1]=0;
+                    }else{
+                        c_x2=i;
+                        c_y2=j;
+                    }
+                }
+            }
+        }
+
+        BFS(c_x1,c_y1);
+
+        bw.write(String.valueOf(dist[c_x2][c_y2] - 1));
+        bw.flush();
+        bw.close();
+    }
+    public static void BFS(int c_x1,int c_y1){
+        Queue<Main> q = new LinkedList<>();
+        q.add(new Main(c_x1, c_y1));
+        visit[c_x1][c_y1]=true;
+
+        while (!q.isEmpty()) {
+            Main m = q.poll();
+            int x = m.x;
+            int y = m.y;
+
+            if(x==c_x2 && y==c_y2){
+                return;
+            }
+            for(int i=0; i<4; i++){
+                int nx = x +dx[i];
+                int ny = y+dy[i];
+                while(nx < H && ny < W && nx >= 0 && ny >= 0) {
+                    if(map[nx][ny]=='*')break;
+                    if(dist[nx][ny]==-1) {
+                        dist[nx][ny] = dist[x][y]+1;
+                        q.add(new Main(nx, ny));
+                    }
+                    nx = nx+dx[i];
+                    ny = ny +dy[i];
+                }
+            }
+        }
+    }
+}
