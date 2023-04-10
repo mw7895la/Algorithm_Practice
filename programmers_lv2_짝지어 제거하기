@@ -1,0 +1,26 @@
+import java.util.*;
+import java.io.*;
+class Solution
+{
+    public int solution(String s)
+    {
+        int answer = 0;
+        
+        Stack<Character> s1 = new Stack<>();
+        s1.push(s.charAt(0));
+        for(int i=1; i<s.length(); i++){
+            if(!s1.isEmpty() && s1.peek()==s.charAt(i)){
+                s1.pop();
+            }else{
+                s1.push(s.charAt(i));
+            }
+        }
+        
+        if(s1.isEmpty()){
+            answer=1;
+        }
+
+
+        return answer;
+    }
+}
