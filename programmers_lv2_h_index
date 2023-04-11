@@ -1,0 +1,46 @@
+import java.io.*;
+import java.util.*;
+class Solution {
+    public int solution(int[] citations) {
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        int c=0;
+        int answer=0;
+        for(int i=0; i<=10000; i++){
+            ArrayList<Integer>list = new ArrayList<>();
+            c = i;
+            
+            int count=0;
+            for(int j=0; j<citations.length; j++){
+                //if(i==j)continue;
+                if(citations[j]>=c){
+                    count++;
+                }else{
+                    list.add(citations[j]);
+                }
+            }
+            if(count>=c){
+                int check=0;
+                if(list.size()==0){
+                    res.add(c);
+                    check++;
+                }
+                for(int k=0; k<list.size(); k++){
+                    if(list.get(k)>c){
+                        check++;
+                    }
+                }
+                if(check==0){
+                    res.add(c);
+                }
+            }
+            
+        }
+        
+        if(res.size()>0){
+            res.sort(Collections.reverseOrder());
+            answer=res.get(0);
+        }
+        
+        return answer;
+    }
+}
