@@ -1,0 +1,39 @@
+import java.io.*;
+import java.util.*;
+class Solution {
+    public int[] solution(int n, String[] words) {
+        int count=1;
+        int total_count=1;
+        int problem=0;
+        ArrayList<String> list = new ArrayList<>();
+        list.add(words[0]);
+        for(int i=1; i<words.length; i++){
+            count++;
+            if(list.contains(words[i])){
+                problem++;
+                break;
+            }
+            list.add(words[i]);
+            if(words[i-1].charAt(words[i-1].length()-1) != words[i].charAt(0)){
+                problem++;
+                break;
+            }
+            
+            
+            if(count==n){
+                total_count++;
+                count=0;
+            }        
+        }
+    
+        int[] answer;
+        if(problem ==0){
+        
+            answer = new int[]{0,0};
+        }else{
+            answer = new int[]{count,total_count};
+        }
+
+        return answer;
+    }
+}
