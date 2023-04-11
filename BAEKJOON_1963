@@ -1,0 +1,102 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+
+        int test_case = Integer.parseInt(br.readLine());
+        StringTokenizer st;
+        while (test_case-- > 0) {
+            st = new StringTokenizer(br.readLine());
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+
+            int[] dist = new int[10001];
+            dist[A]=0;
+            boolean[] visit = new boolean[10001];
+            visit[A]=true;
+
+            if(A==B){
+                bw.write("0");
+                bw.newLine();
+                bw.flush();
+                continue;
+            }
+
+            Queue<Integer> q = new LinkedList<>();
+            q.add(A);
+            while (!q.isEmpty()) {
+                int now = q.poll();
+
+                int num = now/1000;
+                for(int i=1; i<=9; i++){
+                    if(num==i)continue;
+                    int result=now%1000 + i*1000;
+                    if (result <= 9999 && primary(result)) {
+                        if (!visit[result]) {
+                            visit[result]=true;
+                            dist[result]=dist[now]+1;
+                            q.add(result);
+                        }
+                    }
+
+                }
+                num = (now%1000) /100;
+                for(int i=0; i<=9; i++){
+                    if(num==i)continue;
+                    int result = now- num*100 + i*100;
+                    if (result>999 && result <=9999 && primary(result)) {
+                        if (!visit[result]) {
+                            visit[result]=true;
+                            dist[result]=dist[now]+1;
+                            q.add(result);
+                        }
+                    }
+                }
+
+                num = (now%100) /10;
+                for(int i=0; i<=9; i++){
+                    if(num==i)continue;
+                    int result = now - num*10 + i*10;
+                    if (result > 999 && result <= 9999 && primary(result)) {
+                        if (!visit[result]) {
+                            visit[result]=true;
+                            dist[result]=dist[now]+1;
+                            q.add(result);
+                        }
+                    }
+                }
+
+                num = now%10;
+                for(int i=0; i<=9; i++){
+                    if(num==i)continue;
+                    int result = now - num + i;
+                    if (result > 999 && result <= 9999 && primary(result)) {
+                        if (!visit[result]) {
+                            visit[result]=true;
+                            dist[result]=dist[now]+1;
+                            q.add(result);
+                        }
+                    }
+                }
+
+            }
+            bw.write(String.valueOf(dist[B]));
+            bw.newLine();
+            bw.flush();
+
+        }
+        bw.close();
+    }
+    public static boolean primary(int num){
+        for(int i=2; i<num; i++){
+            if(num%i==0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
