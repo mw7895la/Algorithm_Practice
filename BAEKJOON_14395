@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+
+public class Main {
+    static long max = 1000000001L;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        long s = Long.parseLong(st.nextToken());
+        long t = Long.parseLong(st.nextToken());
+        Queue<Long> q = new LinkedList<>();
+        Queue<String> qs = new LinkedList<>();
+        HashSet<Long> set = new HashSet<>();
+
+        if(s==t){
+            bw.write("0");
+            bw.flush();
+            bw.close();
+            System.exit(0);
+        }
+
+        q.add(s);
+        qs.add("");
+        set.add(s);
+        while (!q.isEmpty()) {
+
+            long now = q.poll();
+            String str = qs.poll();
+
+            if(now == t){
+                System.out.println(str);
+                System.exit(0);
+            }
+
+            if (0 <= now * now && now * now < max && set.contains(now * now) == false) {
+                set.add(now*now);
+                q.add(now*now);
+                qs.add(str+"*");
+            }
+            if (0 <= now + now && now + now < max && set.contains(now + now) == false) {
+                set.add(now+now);
+                q.add(now+now);
+                qs.add(str+"+");
+            }
+            if (0 <= now - now && now - now < max && set.contains(now - now) == false) {
+                set.add(now-now);
+                q.add(now-now);
+                qs.add(str+"-");
+            }
+            if (now!=0 && 0 <= now / now && now / now < max && set.contains(now / now) == false) {
+                set.add(now/now);
+                q.add(now/now);
+                qs.add(str+"/");
+            }
+            
+            
+        }
+
+        System.out.println(-1);
+    }
+}
+
