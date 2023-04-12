@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+class Solution {
+    static class Position{
+        int x;
+        int y;
+        int dist;
+        public Position(int x,int y,int dist){
+        this.x=x;
+        this.y=y;
+        this.dist=dist;
+        }
+    }
+    static int[] dx = new int[]{0,1,0,-1};
+    static int[] dy = new int[]{1,0,-1,0};
+    static boolean[][] visit;
+    static int min = Integer.MAX_VALUE;
+    public int solution(int[][] maps) {
+        
+        visit=new boolean[maps.length][maps[0].length];
+        
+        BFS(0,0,maps);
+        
+        int answer =0;
+        if(min==Integer.MAX_VALUE){
+            answer=-1;
+        }else{
+            answer=min;
+        }
+        return answer;
+    }
+    public static void BFS(int xpos,int ypos,int[][] clone){
+        Queue<Position> q = new LinkedList<>();
+        visit[xpos][ypos]=true;
+        q.add(new Position(xpos,ypos,1));
+        int N = clone.length;
+        int M = clone[0].length;
+        while(!q.isEmpty()){
+            Position s = q.poll();
+            int x = s.x;
+            int y = s.y;
+            if(x==N-1 && y==M-1){
+                if(min > s.dist){
+                    min = s.dist;
+                }
+            }
+            
+            for(int i=0; i<4; i++){
+                int nx = x +dx[i];
+                int ny = y +dy[i];
+                if(nx<N && ny<M && nx>=0 && ny>=0){
+                    if(!visit[nx][ny] && clone[nx][ny]!=0){
+                        visit[nx][ny]=true;
+                        q.add(new Position(nx,ny,s.dist+1));
+                    }
+                }
+            }
+        }
+    }
+    
+}
