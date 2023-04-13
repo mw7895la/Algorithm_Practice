@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+class Solution {
+    static int[] a;
+    static boolean[] visit;
+    static ArrayList<Integer> list;
+    public int solution(String numbers) {
+        list = new ArrayList<>();
+        
+        visit = new boolean[numbers.length()];
+        
+        String[] str = numbers.split("");
+        
+        for(int i=1;i<=numbers.length(); i++){
+            recursion(str,"",i,numbers.length());
+        }
+        
+        int count=0;
+        for(int i=0; i<list.size(); i++){
+            if(prime(list.get(i))){
+                count++;
+            }
+        }
+        
+        
+        int answer = count;
+        return answer;
+    }
+    public static void recursion(String[] str,String a,int N,int M){
+        if(a.length()==N){
+            
+            int temp = Integer.parseInt(a);
+            if(!list.contains(temp)){
+                list.add(temp);
+            }
+            
+            return;
+        }
+        
+        for(int i=0; i<M; i++){
+            if(visit[i])continue;
+            visit[i]=true;
+            a = a+str[i];
+            recursion(str,a,N,M);
+            visit[i]=false;
+            a = a.substring(0,a.length()-1);
+        }
+    }
+    public static boolean prime(int n){
+        if(n<=1)return false;
+        if(n==2)return true;
+        for(int i=2; i<=Math.sqrt(n); i++){
+            if(n%i==0){
+                return false;
+            }
+        }
+        return true;
+    }
+}
