@@ -1,0 +1,41 @@
+무게가 가장 작은 사람과 가장 큰사람이 <= limit 라면, min +1 , max -1 , answer +1 
+
+limit를 넘어간다면,
+어짜피 무게가 많이 나가는 사람 혼자서 구명보트를 탈 수 있다. 그래서 max_index만 -1 하고  횟수는 +1
+
+
+
+
+
+
+
+
+
+import java.io.*;
+import java.util.*;
+class Solution {
+    public int solution(int[] people, int limit) {
+        
+        Arrays.sort(people);
+        
+        int min_index = 0;
+        int max_index = people.length-1;
+        int answer =0;
+        
+        while(max_index>= min_index){
+            if(people[min_index]+people[max_index] <= limit){
+                answer++;
+                max_index--;
+                min_index++;
+            }else{
+                answer++;
+                max_index--;
+            }
+        }
+        
+        
+        
+        
+        return answer;
+    }
+}
