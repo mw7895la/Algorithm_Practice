@@ -7,7 +7,7 @@ public class Main {
         while(i>0 && d[i-1] >= d[i]){
             i-=1;
         }
-        if(i<=0){
+        if(i<=0){ 
             return false;
         }
         int j= d.length-1;
