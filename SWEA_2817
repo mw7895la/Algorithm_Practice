@@ -10,7 +10,7 @@ public class Main {
         int test_case = Integer.parseInt(br.readLine());
         StringTokenizer st;
         int[] arr;
-        for(int t=1; t<=test_case; t++){
+        for(int t=1; t<=test_case; t++){ 
             st= new StringTokenizer(br.readLine());
 
             int N = Integer.parseInt(st.nextToken());
