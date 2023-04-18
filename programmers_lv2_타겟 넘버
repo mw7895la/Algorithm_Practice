@@ -1,0 +1,30 @@
+import java.io.*;
+import java.util.*;
+class Solution {
+    
+
+    static int min=0;
+    
+    public int solution(int[] numbers, int target) {
+        
+        int answer = 0;
+        
+        DFS(numbers,0,0,target);
+        
+        
+        return min;
+    }
+    public static void DFS(int[] numbers,int depth,int sum,int target){
+        if(depth==numbers.length){
+            if(sum==target){
+                min++;
+            }
+            return;
+        }else{
+            int plus = sum + numbers[depth];
+            int minus = sum - numbers[depth];
+            DFS(numbers,depth+1,plus,target);
+            DFS(numbers,depth+1,minus,target);
+        }
+    }
+}
