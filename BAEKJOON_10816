@@ -43,3 +43,78 @@ public class Main {
 
     }
 }
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+상하한을 이용한 이분탐색
+
+import java.io.*;
+import java.util.*;
+public class Main {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        //상근이
+        int N = Integer.parseInt(br.readLine());
+
+        int[] A = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            A[i] = Integer.parseInt(st.nextToken());
+        }
+        Arrays.sort(A);
+
+        int M = Integer.parseInt(br.readLine());
+        int[] B = new int[M];
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<M; i++){
+            B[i] = Integer.parseInt(st.nextToken());
+        }
+
+
+        for(int i=0; i<M; i++){
+            int num = B[i];
+            int left = 0;
+            int right = A.length-1;
+            int LowerBound =0;
+            int UpperBound =0;
+
+            while(left <= right){
+                int mid = (left+right)/2;
+                if(A[mid]==num){
+                    LowerBound=mid;
+                    right = mid-1;
+                }else if(A[mid] > num){
+                    right = mid-1;
+                }else{
+                    left = mid+1;
+                }
+            }
+            left= 0;
+            right=A.length-1;
+            while(left <=right){
+                int mid = (left+right)/2;
+                if(A[mid]==num){
+                    UpperBound=  mid+1;
+                    left = mid+1;
+                }else if(A[mid]>num){
+                    right = mid-1;
+                }else{
+                    left = mid+1;
+                }
+            }
+            bw.write(UpperBound-LowerBound+" ");
+
+        }
+        bw.flush();
+        bw.close();
+
+    }
+
+
+
+}
