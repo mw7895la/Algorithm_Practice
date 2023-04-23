@@ -9,7 +9,7 @@ public class Main {
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int N = Integer.parseInt(br.readLine());
-
+ 
         int[] A = new int[N + 1];
         int[] D = new int[N + 1];
 
