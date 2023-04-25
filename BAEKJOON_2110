@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+
+public class Test {
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int C = Integer.parseInt(st.nextToken());
+
+        int[] wifi = new int[N];
+
+        for(int i=0; i<N; i++){
+            wifi[i] = Integer.parseInt(br.readLine());
+        }
+
+        Arrays.sort(wifi);
+
+
+        int l = 1;
+        int r = wifi[N-1]-wifi[0];
+        int ans = 1;
+        while(l<=r){
+            int mid = (l+r)/2;
+
+            if(possible(wifi, C, mid)){
+                ans = Math.max(ans, mid);
+                l = mid+1;
+            }else{
+                r = mid -1;
+            }
+
+        }
+        bw.write(String.valueOf(ans));
+        bw.flush();
+        bw.close();
+
+    }
+    public static boolean possible(int[] arr,int C,int K){
+        int cnt =1;
+        int pivot = arr[0];
+        for(int i=1; i<arr.length; i++){
+            if(arr[i] - pivot >=K){
+                cnt++;
+                pivot = arr[i];
+            }
+        }
+
+        return cnt>=C;
+    }
+
+}
