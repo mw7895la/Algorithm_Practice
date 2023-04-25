@@ -5,7 +5,7 @@ import java.util.*;
 
 public class Main {
     static int N;
-    static int M;
+    static int M; 
     static int K;
     static int[][] passage;
     static boolean[][] visit;
