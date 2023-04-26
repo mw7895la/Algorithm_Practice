@@ -5,7 +5,7 @@ import java.util.*;
 public class Main {
 
     public static List<Integer>[] list;
-    public static Stack<Integer> s;
+    public static Stack<Integer> s; 
     public static int start;
     public static boolean[] v;
     static BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
@@ -16,7 +16,7 @@ public class Main {
 
         StringTokenizer st =new StringTokenizer(br.readLine());
         int N = Integer.parseInt(st.nextToken());       //정점 개수     4
-        int E = Integer.parseInt(st.nextToken());       //간선의 수      5
+        int E = Integer.parseInt(st.nextToken());       //간선의 수      5 
         start = Integer.parseInt(st.nextToken());       //시작 점
 
         list = new ArrayList[N+1];
