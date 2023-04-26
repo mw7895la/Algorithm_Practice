@@ -1,0 +1,62 @@
+import java.util.*;
+class Solution {
+    public int solution(int k, int[][] dungeons) {
+        
+        int answer = -1;
+        
+        int size = dungeons.length;
+        
+        int[] a = new int[size];
+        for(int i=0; i<size; i++){
+            a[i] = i;
+        }
+        
+        do{
+            int count=0;
+            int test = k;
+            for(int i=0; i<a.length; i++){
+                if(test >= dungeons[a[i]][0]){
+                    test = test - dungeons[a[i]][1];
+                    count++;
+                }
+            }
+            if(answer < count){
+                answer = count;
+            }
+            
+            
+        }while(next_permutation(a));
+
+        
+        return answer;
+    }
+    public static boolean next_permutation(int[] a){
+        int i = a.length-1;
+        while(i>0 && a[i-1] >= a[i]){
+            i-=1;
+        }
+        if(i<=0){
+            return false;
+        }
+        
+        int j = a.length-1;
+        while(a[i-1] >= a[j]){
+            j-=1;
+        }
+        
+        int temp = a[i-1];
+        a[i-1] = a[j];
+        a[j] =temp;
+        
+        j = a.length-1;
+        
+        while(i<j){
+            temp = a[i];
+            a[i] = a[j];
+            a[j] =temp;
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
