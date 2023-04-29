@@ -10,7 +10,7 @@ public class Main {
 
     public static void Print(int[] from,int n,int m) throws IOException{
         if(n!=m){
-            Print(from,n,from[m]);
+            Print(from,n,from[m]); 
         }
         bw.write(m + " ");
     }
