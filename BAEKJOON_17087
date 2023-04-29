@@ -16,7 +16,7 @@ public class Main {
         st= new StringTokenizer(br.readLine());
         for(int i=0; i<arr.length; i++){
             arr[i] = Integer.parseInt(st.nextToken());
-            int res = Math.abs(S-arr[i]);
+            int res = Math.abs(S-arr[i]); 
             min = Math.min(res,min);
             list.add(res);
         }
