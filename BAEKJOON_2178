@@ -14,7 +14,7 @@ public class Main {
     static int[] dx = new int[]{0, 1, 0, -1};
     static int[] dy = new int[]{1, 0, -1, 0};
     static int N;
-    static int M;
+    static int M; 
     static int[][] miro;
     static int[][] visit;
     public static void main(String[] args) throws IOException {
