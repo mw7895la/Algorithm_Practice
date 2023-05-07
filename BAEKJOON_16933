@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 public class Main {
     int x;
-    int y;
+    int y; 
     int dist;
     int wall;
     boolean weather;
