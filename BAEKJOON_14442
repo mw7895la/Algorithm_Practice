@@ -10,7 +10,7 @@ public class Main {
         this.x = x;
         this.y = y;
         this.dist = dist;
-        this.wall = wall;
+        this.wall = wall; 
     }
 
     static int N;
